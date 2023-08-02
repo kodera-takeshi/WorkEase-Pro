@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('books', function (Blueprint $table) {
             $table->id();
             $table->string('name')->comment('書籍名');
-            $table->string('labeling')->comment('ラベリング');
+            $table->string('labeling')->comment('ラベリング')->unique();
             $table->unsignedBigInteger('status_id')->comment('ステータスID');
             $table->string('note')->comment('備考');
             $table->unsignedBigInteger('office_id')->comment('所在オフィス(オフィスID)');

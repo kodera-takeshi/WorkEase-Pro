@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->string('name')->comment('従業員名');
-            $table->string('email')->comment('メールアドレス');
+            $table->string('email')->comment('メールアドレス')->unique();
             $table->string('password')->comment('パスワード');
             $table->string('birthday')->comment('誕生日')->nullable();
             $table->unsignedBigInteger('office_id')->comment('所属オフィスID');
