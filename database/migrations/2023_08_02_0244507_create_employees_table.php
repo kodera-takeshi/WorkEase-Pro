@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('birthday')->comment('誕生日')->nullable();
             $table->unsignedBigInteger('office_id')->comment('所属オフィスID');
             $table->unsignedBigInteger('managerial_position_id')->comment('役職ID');
+            $table->unsignedBigInteger('employee_status_id')->comment('社員ステータスID');
             $table->timestamps();
             $table->boolean('del_flg')->default(false)->comment('削除フラグ');
         });
