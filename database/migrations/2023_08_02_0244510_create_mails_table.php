@@ -14,10 +14,10 @@ return new class extends Migration
         /* メールテーブル */
         Schema::create('mails', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('from_employee_id')->comment('所有者（社員ID）');
-            $table->unsignedBigInteger('to_employee_id')->comment('所有者（社員ID）');
-            $table->unsignedBigInteger('cc_employee_id')->comment('所有者（社員ID）')->nullable();
-            $table->unsignedBigInteger('bcc_employee_id')->comment('所有者（社員ID）')->nullable();
+            $table->string('from_employee_id')->comment('所有者（社員ID）');
+            $table->string('to_employee_id')->comment('所有者（社員ID）');
+            $table->string('cc_employee_id')->comment('所有者（社員ID）')->nullable();
+            $table->string('bcc_employee_id')->comment('所有者（社員ID）')->nullable();
             $table->string('title')->comment('タイトル');
             $table->string('body')->comment('本文');
             $table->timestamps();
