@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('from_employee_id')->comment('所有者（社員ID）');
             $table->unsignedBigInteger('to_employee_id')->comment('所有者（社員ID）');
             $table->unsignedBigInteger('cc_employee_id')->comment('所有者（社員ID）')->nullable();
-            $table->unsignedBigInteger('bcc_recipient_employee_id')->comment('所有者（社員ID）')->nullable();
+            $table->unsignedBigInteger('bcc_employee_id')->comment('所有者（社員ID）')->nullable();
             $table->string('title')->comment('タイトル');
             $table->string('body')->comment('本文');
             $table->timestamps();
