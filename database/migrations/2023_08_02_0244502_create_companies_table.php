@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('offices', function (Blueprint $table) {
+        /* 企業テーブル */
+        Schema::create('companies', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->comment('企業名');
             $table->timestamps();
+            $table->boolean('del_flg')->default(false)->comment('削除フラグ');
         });
     }
 
@@ -22,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('offices');
+        Schema::dropIfExists('companies');
     }
 };

@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('employee_status', function (Blueprint $table) {
+        /* 役職テーブル */
+        Schema::create('managerial_positions', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->comment('役職名');
             $table->timestamps();
+            $table->boolean('del_flg')->default(false)->comment('削除フラグ');
         });
     }
 
@@ -22,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('employee_status');
+        Schema::dropIfExists('managerial_positions');
     }
 };

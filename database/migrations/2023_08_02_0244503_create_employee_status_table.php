@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('employees', function (Blueprint $table) {
+        /* 社員ステータステーブル */
+        Schema::create('employee_status', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->comment('社員ステータス');
             $table->timestamps();
+            $table->boolean('del_flg')->default(false)->comment('削除フラグ');
         });
     }
 
@@ -22,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('employees');
+        Schema::dropIfExists('employee_status');
     }
 };

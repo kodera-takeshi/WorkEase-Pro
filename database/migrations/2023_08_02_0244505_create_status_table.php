@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('books', function (Blueprint $table) {
+        /* ステータステーブル */
+        Schema::create('status', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->comment('ステータス');
             $table->timestamps();
+            $table->boolean('del_flg')->default(false)->comment('削除フラグ');
         });
     }
 
@@ -22,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('books');
+        Schema::dropIfExists('status');
     }
 };

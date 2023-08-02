@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mails', function (Blueprint $table) {
+        /* 管理者権限テーブル */
+        Schema::create('admin_roles', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->comment('管理者権限');
             $table->timestamps();
+            $table->boolean('del_flg')->default(false)->comment('削除フラグ');
         });
     }
 
@@ -22,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mails');
+        Schema::dropIfExists('admin_status');
     }
 };
