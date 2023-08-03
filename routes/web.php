@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\AdminController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,9 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/admin/signup', function () {
-    return view('admin.signup.index');
+Route::prefix('admin')->group(function() {
+    Route::get('/', [AdminController::class, 'index'])->name('admin');
+
+    Route::get('/signup', [AdminController::class, 'signup'])->name('admin.signup');
+    Route::post('/signup', [AdminController::class, 'create'])->name('admin.create');
 });
+
 
 Route::get('/', function () {
     return view('welcome');

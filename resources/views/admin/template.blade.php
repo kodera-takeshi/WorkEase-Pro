@@ -8,11 +8,11 @@
     @vite('resources/css/app.css')
     <title>@yield('title')：TC-App</title>
 </head>
-@component('admin.components.header')
+
+@yield('header')
+
 <body>
-<h1 class="text-3xl font-bold underline">
-    Hello world!
-</h1>
-@yield('body')
+    @yield('body')
 </body>
+
 </html>
