@@ -19,7 +19,7 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $session = $request->session()->all();
-        if(!$session['admin']) {
+        if(!isset($session['admin'])) {
             // todo:SignInに変更する
             return Redirect::route('admin.signup');
         };

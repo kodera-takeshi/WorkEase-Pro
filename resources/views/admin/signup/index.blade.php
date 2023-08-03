@@ -13,7 +13,7 @@
         </div>
         <div class="mx-auto max-w-2xl text-center">
             <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Sign Up</h2>
-            <p class="mt-2 text-lg leading-8 text-gray-600">Aute magna irure deserunt veniam aliqua magna enim voluptate.</p>
+            <p class="mt-2 text-lg leading-8 text-gray-600">管理者アカウントのアカウントを作成し、ログインします。</p>
         </div>
 
         <form action="{{ route('admin.create') }}" method="POST" class="mx-auto mt-16 max-w-xl sm:mt-20">
