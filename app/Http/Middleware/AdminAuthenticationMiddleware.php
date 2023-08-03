@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminMiddleware
+class AdminAuthenticationMiddleware
 {
     /**
      * Handle an incoming request.
@@ -19,9 +19,9 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $session = $request->session()->all();
-        if(!isset($session['admin'])) {
-            return Redirect::route('admin.signin');
-        };
+        if (isset($session['admin'])) {
+            return Redirect::route('admin');
+        }
         return $next($request);
     }
 }

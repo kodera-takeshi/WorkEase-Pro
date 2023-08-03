@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\AdminAuthenticationMiddleware;
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -47,7 +48,11 @@ class Kernel extends HttpKernel
 
         'admin' => [
             AdminMiddleware::class,
-        ]
+        ],
+
+        'adminAuthentication' => [
+            AdminAuthenticationMiddleware::class
+        ],
     ];
 
     /**

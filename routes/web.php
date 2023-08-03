@@ -11,9 +11,16 @@ use App\Http\Controllers\AdminController;
 |
 | 管理者が利用するルーティングです。
 */
-Route::prefix('admin')->group(function() {
-    Route::get('/signup', [AdminController::class, 'signup'])->name('admin.signup');
-    Route::post('/signup', [AdminController::class, 'create'])->name('admin.create');
+
+Route::group(['middleware' => ['adminAuthentication']], function () {
+
+    Route::prefix('admin')->group(function () {
+        Route::get('/signup', [AdminController::class, 'signup'])->name('admin.signup');
+        Route::post('/signup', [AdminController::class, 'create'])->name('admin.create');
+
+        Route::get('/signin', [AdminController::class, 'signin'])->name('admin.signin');
+        Route::post('/signin', [AdminController::class, 'check'])->name('admin.check');
+    });
 });
 
 Route::group(['middleware' => ['admin']], function () {
