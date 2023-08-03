@@ -24,9 +24,9 @@ class AdminController extends Controller
         $name = $request->name;
         $email = $request->email;
         // パスワードのハッシュ化
-        $passwordService = new PasswordService();
-        $password = $passwordService->hash($request->password);
+        $password = PasswordService::hash($request->password);
 
+        // DBにアカウントを登録
         $param = [
             'name' => $name,
             'email' => $email,
@@ -34,17 +34,15 @@ class AdminController extends Controller
             'created_at' => date("Y-m-d H:i:s"),
             'updated_at' => date("Y-m-d H:i:s"),
         ];
-
-        $session_param = [
-            'name' => $name,
-            'email' => $email
-        ];
-
         $admin = DB::table('admins')->insert($param);
 
         if ($admin) {
+            // sessionにログイン情報を登録
+            $session_param = [
+                'name' => $name,
+                'email' => $email
+            ];
             $request->session()->put('admin', $session_param);
-//            dd($request->session()->all());
         } else {
             return redirect()->route('admin.signup');
         }

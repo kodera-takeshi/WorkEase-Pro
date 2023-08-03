@@ -11,7 +11,7 @@ class PasswordService
      * @param string $password
      * @return string
      */
-    public function hash(string $password): string
+    static function hash(string $password): string
     {
         return Hash::make($password);
     }
@@ -22,7 +22,7 @@ class PasswordService
      * @param string $hash_password
      * @return bool
      */
-    public function check(string $password, string $hash_password): bool
+    static function check(string $password, string $hash_password): bool
     {
         if (Hash::check($password, $hash_password)) {
             return true;
