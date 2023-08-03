@@ -17,7 +17,7 @@ class AdminController extends Controller
 
     public function signup()
     {
-        return view('admin.signup.index');
+        return view('admin.authentications.signup');
     }
 
     public function create(AdminSignupRequest $request)
@@ -45,7 +45,7 @@ class AdminController extends Controller
             ];
             $request->session()->put('admin', $session_param);
         } else {
-            return redirect()->route('admin.signup');
+            return redirect()->route('admin.authentications.signup');
         }
 
         return Redirect::route('admin');
