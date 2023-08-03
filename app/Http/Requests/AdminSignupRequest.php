@@ -45,7 +45,7 @@ class AdminSignupRequest extends FormRequest
     {
         return [
             'name' => '名前',
-            'email' => 'メール',
+            'email' => 'メールアドレス',
             'password' => 'パスワード',
         ];
     }
