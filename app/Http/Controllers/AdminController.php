@@ -15,6 +15,43 @@ class AdminController extends Controller
         return view('admin.index');
     }
 
+    public function signin()
+    {
+        $message = null;
+        return view('admin.authentications.signin', ['message' => $message]);
+    }
+
+    public function check(Request $request)
+    {
+        /* メールアドレス判定 */
+        $email = $request->email;
+        $admin = DB::table('admins')
+            ->where('email', $email)
+            ->first();
+        if (!$admin) {
+            $message = '登録されていないメールアドレスです。';
+            return view('admin.authentications.signin', ['message' => $message]);
+        }
+
+        /* パスワード判定 */
+        $password = $request->password;
+        $hash_password = $admin->password;
+        $password_check = PasswordService::check($password, $hash_password);
+        if (!$password_check) {
+            $message = 'パスワードが違います。';
+            return view('admin.authentications.signin', ['message' => $message]);
+        }
+
+        /* sessionにログイン情報を登録 */
+        $session_param = [
+            'name' => $admin->name,
+            'email' => $email
+        ];
+        $request->session()->put('admin', $session_param);
+
+        return Redirect::route('admin');
+    }
+
     public function signup()
     {
         return view('admin.authentications.signup');
