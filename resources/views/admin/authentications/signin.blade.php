@@ -16,7 +16,12 @@
         </div>
         <div class="mx-auto max-w-2xl text-center">
             <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Sign In</h2>
-            <p class="mt-2 text-lg leading-8 text-gray-600">管理者アカウントのアカウントでログインします。</p>
+            <p class="mt-2 text-lg leading-8 text-gray-600">管理者のアカウントでログインします。</p>
+            <p class="mt-2 text-lg leading-8 text-gray-600">
+                管理者アカウントをお持ちでない方は、
+                <a class="text-blue-600 underline decoration-blue-600" href="{{ route('admin.signup') }}">サインアップ</a>
+                してください。
+            </p>
         </div>
 
         <form action="{{ route('admin.check') }}" method="POST" class="mx-auto mt-16 max-w-xl sm:mt-20">

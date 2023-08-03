@@ -15,7 +15,7 @@ Route::prefix('admin')->group(function() {
     Route::get('/signup', [AdminController::class, 'signup'])->name('admin.signup');
     Route::post('/signup', [AdminController::class, 'create'])->name('admin.create');
 
-    Route::get('/signin', [AdminController::class, 'signin'])->name('admin.signup');
+    Route::get('/signin', [AdminController::class, 'signin'])->name('admin.signin');
     Route::post('/signin', [AdminController::class, 'check'])->name('admin.check');
 });
 
