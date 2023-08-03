@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Service\PasswordService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use App\Service\PasswordService;
+use App\Http\Requests\AdminSignupRequest;
 
 class AdminController extends Controller
 {
@@ -19,7 +20,7 @@ class AdminController extends Controller
         return view('admin.signup.index');
     }
 
-    public function create(Request $request)
+    public function create(AdminSignupRequest $request)
     {
         $name = $request->name;
         $email = $request->email;

@@ -15,8 +15,14 @@
             <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Sign Up</h2>
             <p class="mt-2 text-lg leading-8 text-gray-600">Aute magna irure deserunt veniam aliqua magna enim voluptate.</p>
         </div>
+
         <form action="{{ route('admin.create') }}" method="POST" class="mx-auto mt-16 max-w-xl sm:mt-20">
             @csrf
+            @foreach ($errors->all() as $error)
+                <div class="mx-auto max-w-2xl text-center">
+                    <p class="mt-2 text-lg leading-8 text-red-600">{{$error}}</p>
+                </div>
+            @endforeach
             <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
                 <div class="sm:col-span-2">
                     <label for="name" class="block text-sm font-semibold leading-6 text-gray-900">名前</label>
