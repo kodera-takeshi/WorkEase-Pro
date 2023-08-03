@@ -10,6 +10,9 @@
 </head>
 @component('admin.components.header')
 <body>
+<h1 class="text-3xl font-bold underline">
+    Hello world!
+</h1>
 @yield('body')
 </body>
 </html>

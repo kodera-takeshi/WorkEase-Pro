@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/admin/signup', function () {
+    return view('admin.signup.index');
+});
+
 Route::get('/', function () {
     return view('welcome');
 });
