@@ -16,7 +16,7 @@
         </div>
         <div class="mx-auto max-w-2xl text-center">
             <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Sign Up</h2>
-            <p class="mt-2 text-lg leading-8 text-gray-600">管理者アカウントのアカウントを作成し、ログインします。</p>
+            <p class="mt-2 text-lg leading-8 text-gray-600">管理者アカウントを作成し、ログインします。</p>
             <p class="mt-2 text-lg leading-8 text-gray-600">
                 既に管理者アカウントをお持ちの方は、
                 <a class="text-blue-600 underline decoration-blue-600" href="{{ route('admin.signin') }}">サインイン</a>
