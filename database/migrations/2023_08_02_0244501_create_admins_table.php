@@ -15,9 +15,9 @@ return new class extends Migration
         Schema::create('admins', function (Blueprint $table) {
             $table->id();
             $table->string('name')->comment('管理者名');
-            $table->string('email')->comment('メールアドレス');
+            $table->string('email')->unique()->comment('メールアドレス');
             $table->string('password')->comment('パスワード');
-            $table->unsignedBigInteger('admin_role_id')->comment('管理者権限ID');
+            $table->unsignedBigInteger('admin_role_id')->default(1)->comment('管理者権限ID');
             $table->timestamps();
             $table->boolean('del_flg')->default(false)->comment('削除フラグ');
         });
