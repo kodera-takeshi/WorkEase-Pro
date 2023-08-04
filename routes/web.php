@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminCompanyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,8 @@ Route::group(['middleware' => ['admin']], function () {
 
     Route::prefix('admin')->group(function() {
         Route::get('/', [AdminController::class, 'index'])->name('admin');
+        // companies
+        Route::get('/company',[AdminCompanyController::class, 'index'])->name('admin.company');
     });
 
 });
