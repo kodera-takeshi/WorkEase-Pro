@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\DB;
 
 class AdminStatusController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         $status = DB::table('status')
             ->where('del_flg', false)
             ->get()
