@@ -21,9 +21,11 @@
                     <td class="border border-slate-500 text-center">{{ $item->id }}</td>
                     <td class="border border-slate-500 px-3">{{ $item->name }}</td>
                     <td class="border border-slate-500 px-3">
+                        <!-- todo:更新モーダルを作成 -->
                         <button class="rounded-lg rounded-full bg-blue-500 text-white px-4 flex mx-auto">更新</button>
                     </td>
                     <td class="border border-slate-500 px-3">
+                        <!-- todo:削除モーダルを作成 -->
                         <button class="rounded-lg rounded-full bg-red-500 text-white px-4 flex mx-auto">削除</button>
                     </td>
                 </tr>
