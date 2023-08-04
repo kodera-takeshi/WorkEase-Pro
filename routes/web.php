@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminCompanyController;
+use App\Http\Controllers\AdminStatusController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,8 @@ Route::group(['middleware' => ['admin']], function () {
         Route::get('/', [AdminController::class, 'index'])->name('admin');
         // companies
         Route::get('/company',[AdminCompanyController::class, 'index'])->name('admin.company');
+        // status
+        Route::get('/status',[AdminStatusController::class, 'index'])->name('admin.status');
     });
 
 });
