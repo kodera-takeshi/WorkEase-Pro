@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\DB;
 
 class AdminCompanyController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         $companies = DB::table('companies')
             ->where('del_flg', false)
             ->get()
