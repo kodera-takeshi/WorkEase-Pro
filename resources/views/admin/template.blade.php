@@ -34,7 +34,7 @@
                             <a href="{{ route('admin.company') }}" class="hover:bg-gray-700 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">企業一覧</a>
                             <a href="{{ route('admin.status') }}" class="text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">ステータス</a>
                             <a href="{{ route('admin.employee-status') }}" class="text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">社員ステータス</a>
-                            <a href="#" class="text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Calendar</a>
+                            <a href="{{ route('admin.managerial-position') }}" class="text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">役職</a>
                             <a href="#" class="text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Reports</a>
                         </div>
                     </div>

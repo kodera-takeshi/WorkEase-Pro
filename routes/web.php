@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminCompanyController;
 use App\Http\Controllers\AdminStatusController;
 use App\Http\Controllers\AdminEmployeeStatusController;
+use App\Http\Controllers\AdminManagerialPositionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +37,8 @@ Route::group(['middleware' => ['admin']], function () {
         Route::get('/status',[AdminStatusController::class, 'index'])->name('admin.status');
         // employee_status
         Route::get('/employee-status',[AdminEmployeeStatusController::class, 'index'])->name('admin.employee-status');
+        // $managerial_positions
+        Route::get('/managerial-position', [AdminManagerialPositionController::class, 'index'])->name('admin.managerial-position');
     });
 
 });
