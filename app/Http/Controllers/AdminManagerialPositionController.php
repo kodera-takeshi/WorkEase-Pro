@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Service\DeleteService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -43,5 +44,25 @@ class AdminManagerialPositionController extends Controller
             ->update($param);
 
         return Redirect::route('admin.managerial-position');
+    }
+
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function delete(Request $request): RedirectResponse
+    {
+        $check = DeleteService::check($request->delete);
+
+        if ($check) {
+            DB::table('managerial_positions')
+                ->where('id', $request->id)
+                ->update([
+                    'del_flg' => true
+                ]);
+            return Redirect::route('admin.managerial-position');
+        } else {
+            return Redirect::route('admin.managerial-position');
+        }
     }
 }
