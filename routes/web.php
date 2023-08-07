@@ -40,6 +40,7 @@ Route::group(['middleware' => ['admin']], function () {
         // employee_status
         Route::get('/employee-status',[AdminEmployeeStatusController::class, 'index'])->name('admin.employee-status');
         Route::post('/employee-status',[AdminEmployeeStatusController::class, 'update'])->name('admin.employee-status.update');
+        Route::post('/employee-status/delete',[AdminEmployeeStatusController::class, 'delete'])->name('admin.employee-status.delete');
         // $managerial_positions
         Route::get('/managerial-position', [AdminManagerialPositionController::class, 'index'])->name('admin.managerial-position');
     });

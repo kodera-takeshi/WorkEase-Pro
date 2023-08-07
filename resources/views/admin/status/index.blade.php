@@ -70,7 +70,6 @@
                         </div>
                     </td>
                     <td class="border border-slate-500 px-3">
-                        <!-- todo:削除モーダルを作成 -->
                         <a
                             href="#delete-modal_{{ $item->id }}"
                             class="block rounded-lg rounded-full bg-red-500 text-white px-4 w-2/5 mx-auto text-center"
