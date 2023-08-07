@@ -47,7 +47,7 @@ class AdminStatusController extends Controller
 
     /**
      * @param Request $request
-     * @return void
+     * @return RedirectResponse
      */
     public function delete(Request $request)
     {
