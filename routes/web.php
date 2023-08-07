@@ -35,6 +35,7 @@ Route::group(['middleware' => ['admin']], function () {
         Route::get('/company',[AdminCompanyController::class, 'index'])->name('admin.company');
         // status
         Route::get('/status',[AdminStatusController::class, 'index'])->name('admin.status');
+        Route::post('/status',[AdminStatusController::class, 'update'])->name('admin.status.update');
         // employee_status
         Route::get('/employee-status',[AdminEmployeeStatusController::class, 'index'])->name('admin.employee-status');
         // $managerial_positions
