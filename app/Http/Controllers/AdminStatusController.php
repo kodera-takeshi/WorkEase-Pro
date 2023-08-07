@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Service\DeleteService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -21,8 +22,9 @@ class AdminStatusController extends Controller
             ->where('del_flg', false)
             ->get()
             ->all();
+
         return view('admin.status.index', [
-            'status' => $status
+            'status' => $status,
         ]);
     }
 
@@ -34,7 +36,6 @@ class AdminStatusController extends Controller
     {
         $param = [
             'name' => $request->name,
-            'updated_at' => date("Y-m-d H:i:s")
         ];
 
         DB::table('status')
@@ -42,5 +43,25 @@ class AdminStatusController extends Controller
             ->update($param);
 
         return Redirect::route('admin.status');
+    }
+
+    /**
+     * @param Request $request
+     * @return void
+     */
+    public function delete(Request $request)
+    {
+        $check = DeleteService::check($request->delete);
+
+        if ($check) {
+            DB::table('status')
+                ->where('id', $request->id)
+                ->update([
+                    'del_flg' => true
+                ]);
+            return Redirect::route('admin.status');
+        } else {
+            return Redirect::route('admin.status');
+        }
     }
 }
