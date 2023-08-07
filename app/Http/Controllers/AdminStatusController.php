@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Redirect;
 class AdminStatusController extends Controller
 {
     /**
-     * @return Application|Factory|View|\Illuminate\Foundation\Application
+     * @return View
      */
-    public function index()
+    public function index(): view
     {
         $status = DB::table('status')
             ->where('del_flg', false)
@@ -32,10 +32,11 @@ class AdminStatusController extends Controller
      * @param Request $request
      * @return RedirectResponse
      */
-    public function update(Request $request)
+    public function update(Request $request): RedirectResponse
     {
         $param = [
             'name' => $request->name,
+            'updated_at' => date("Y-m-d H:i:s")
         ];
 
         DB::table('status')
@@ -49,7 +50,7 @@ class AdminStatusController extends Controller
      * @param Request $request
      * @return RedirectResponse
      */
-    public function delete(Request $request)
+    public function delete(Request $request): RedirectResponse
     {
         $check = DeleteService::check($request->delete);
 

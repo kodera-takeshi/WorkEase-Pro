@@ -21,7 +21,6 @@
                     <td class="border border-slate-500 text-center">{{ $item->id }}</td>
                     <td class="border border-slate-500 px-3">{{ $item->name }}</td>
                     <td class="border border-slate-500 px-3">
-                        <!-- todo:更新モーダルを作成 -->
                         <a
                             href="#update-modal_{{ $item->id }}"
                             class="block rounded-lg rounded-full bg-blue-500 text-white px-4 w-2/5 mx-auto text-center"
