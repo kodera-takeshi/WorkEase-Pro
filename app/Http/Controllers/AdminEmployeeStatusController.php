@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Redirect;
 class AdminEmployeeStatusController extends Controller
 {
     /**
-     * @return Application|Factory|View|\Illuminate\Foundation\Application
+     * @return View
      */
-    public function index()
+    public function index(): view
     {
         $employee_status = DB::table('employee_status')
             ->where('del_flg', false)
@@ -32,7 +32,7 @@ class AdminEmployeeStatusController extends Controller
      * @param Request $request
      * @return RedirectResponse
      */
-    public function update(Request $request)
+    public function update(Request $request): RedirectResponse
     {
         $param = [
             'name' => $request->name,
@@ -51,7 +51,7 @@ class AdminEmployeeStatusController extends Controller
      * @param Request $request
      * @return RedirectResponse
      */
-    public function delete(Request $request)
+    public function delete(Request $request): RedirectResponse
     {
         $check = DeleteService::check($request->delete);
 
