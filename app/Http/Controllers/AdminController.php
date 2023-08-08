@@ -115,6 +115,7 @@ class AdminController extends Controller
 
     public function update(Request $request)
     {
+        // 更新するレコードを取得
         $admin_db = DB::table('admins')->where('id', $request->id);
         $admin = $admin_db->first();
         // パスワードチェック
