@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -22,6 +23,12 @@ class AdminMiddleware
         if(!isset($session['admin'])) {
             return Redirect::route('admin.signin');
         };
+        $admin = DB::table('admins')->where('id', $session['admin']['id'])->first();
+        $request->session()->put('admin', [
+            'id' => $admin->id,
+            'name' => $admin->name,
+            'email' => $admin->email
+        ]);
         return $next($request);
     }
 }
