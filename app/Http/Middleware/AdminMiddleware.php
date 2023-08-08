@@ -23,6 +23,7 @@ class AdminMiddleware
         if(!isset($session['admin'])) {
             return Redirect::route('admin.signin');
         };
+        // sessionを再設定（更新処理の場合の対応)
         $admin = DB::table('admins')->where('id', $session['admin']['id'])->first();
         $request->session()->put('admin', [
             'id' => $admin->id,

@@ -77,14 +77,6 @@ class AdminController extends Controller
         ];
         $admin = DB::table('admins')->insert($param);
 
-        $admin_account = DB::table('admins')
-            ->where([
-                'name' => $name,
-                'email' => $email,
-                'password' => $password,
-            ])
-            ->first();
-
         if ($admin) {
             $admin_account = DB::table('admins')
                 ->where([
