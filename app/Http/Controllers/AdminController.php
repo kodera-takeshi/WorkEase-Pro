@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use App\Service\PasswordService;
 use App\Http\Requests\AdminSignupRequest;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -44,6 +46,7 @@ class AdminController extends Controller
 
         /* sessionにログイン情報を登録 */
         $session_param = [
+            'id' => $admin->id,
             'name' => $admin->name,
             'email' => $email
         ];
@@ -75,8 +78,17 @@ class AdminController extends Controller
         $admin = DB::table('admins')->insert($param);
 
         if ($admin) {
+            $admin_account = DB::table('admins')
+                ->where([
+                    'name' => $name,
+                    'email' => $email,
+                    'password' => $password,
+                ])
+                ->first();
+
             // sessionにログイン情報を登録
             $session_param = [
+                'id' => $admin_account['id'],
                 'name' => $name,
                 'email' => $email
             ];
@@ -86,5 +98,38 @@ class AdminController extends Controller
         }
 
         return Redirect::route('admin');
+    }
+
+    public function edit()
+    {
+        return view('admin.user.profile');
+    }
+
+    public function update(Request $request)
+    {
+        // 更新するレコードを取得
+        $admin_db = DB::table('admins')->where('id', $request->id);
+        $admin = $admin_db->first();
+        // パスワードチェック
+        $check = PasswordService::check($request->password, $admin->password);
+        if ($check) {
+            $param = [
+                'name' => $request->name,
+                'email' => $request->email
+            ];
+            $admin_db->update($param);
+        }
+
+        /*
+        | todo:S3との接続
+        | Reference
+        |  https://taishou.ne.jp/laravel-s3-connect/
+        |  https://zenn.dev/ikeo/articles/c55ecf1345e70c193f7a
+        | Error
+        |  League\Flysystem\Filesystem::write(): Argument #2 ($contents) must be of type string, null given, called in /Users/koderatakeshi/tc-app/tc-app/vendor/laravel/framework/src/Illuminate/Filesystem/FilesystemAdapter.php on line 375
+        */
+        // $s3 = Storage::disk('s3')->put('/', $request->file);
+
+        return Redirect::route('admin.profile');
     }
 }
