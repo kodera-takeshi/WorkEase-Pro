@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use App\Service\PasswordService;
 use App\Http\Requests\AdminSignupRequest;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -44,6 +46,7 @@ class AdminController extends Controller
 
         /* sessionにログイン情報を登録 */
         $session_param = [
+            'id' => $admin->id,
             'name' => $admin->name,
             'email' => $email
         ];
@@ -74,9 +77,18 @@ class AdminController extends Controller
         ];
         $admin = DB::table('admins')->insert($param);
 
+        $admin = DB::table('admins')
+            ->where([
+                'name' => $name,
+                'email' => $email,
+                'password' => $password,
+            ])
+            ->first();
+
         if ($admin) {
             // sessionにログイン情報を登録
             $session_param = [
+                'id' => $admin['id'],
                 'name' => $name,
                 'email' => $email
             ];
@@ -86,5 +98,18 @@ class AdminController extends Controller
         }
 
         return Redirect::route('admin');
+    }
+
+    public function edit()
+    {
+        return view('admin.user.profile');
+    }
+
+    public function update(Request $request)
+    {
+        // todo:S3との接続
+//        dd($request->file);
+//        $s3 = Storage::disk('s3')->put('/', $request->file);
+//        dd($s3);
     }
 }
