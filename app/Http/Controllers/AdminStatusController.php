@@ -50,6 +50,24 @@ class AdminStatusController extends Controller
      * @param Request $request
      * @return RedirectResponse
      */
+    public function create(Request $request)
+    {
+        $param = [
+            'name' => $request->name,
+            'created_at' => date("Y-m-d H:i:s"),
+            'updated_at' => date("Y-m-d H:i:s"),
+            'del_flg' => false
+        ];
+
+        DB::table('status')->insert($param);
+
+        return Redirect::route('admin.status');
+    }
+
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
     public function delete(Request $request): RedirectResponse
     {
         $check = DeleteService::check($request->delete);
