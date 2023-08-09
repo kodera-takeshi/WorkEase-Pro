@@ -11,6 +11,8 @@
             <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
                 <div class="sm:col-span-2">
                     <label for="file" class="block text-sm font-semibold leading-6 text-gray-900">Icon</label>
+                    <!-- todo:登録した画像の表示 -->
+                    <img src="{{ asset("storage/app/". \Illuminate\Support\Facades\Session::get('admin.img_url')) }}" >
                     <div class="mt-2.5">
                         <input
                             type="file"

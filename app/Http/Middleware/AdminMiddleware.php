@@ -28,7 +28,8 @@ class AdminMiddleware
         $request->session()->put('admin', [
             'id' => $admin->id,
             'name' => $admin->name,
-            'email' => $admin->email
+            'email' => $admin->email,
+            'img_url' => $admin->img_url
         ]);
         return $next($request);
     }
