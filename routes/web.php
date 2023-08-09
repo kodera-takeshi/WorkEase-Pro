@@ -46,6 +46,7 @@ Route::group(['middleware' => ['admin']], function () {
         // managerial_positions
         Route::get('/managerial-position', [AdminManagerialPositionController::class, 'index'])->name('admin.managerial-position');
         Route::post('/managerial-position', [AdminManagerialPositionController::class, 'update'])->name('admin.managerial-position.update');
+        Route::post('/managerial-position/create', [AdminManagerialPositionController::class, 'create'])->name('admin.managerial-position.create');
         Route::post('/managerial-position/delete', [AdminManagerialPositionController::class, 'delete'])->name('admin.managerial-position.delete');
         // profile
         Route::get('/profile', [AdminController::class, 'edit'])->name('admin.profile');
