@@ -56,7 +56,8 @@
                                     class="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                                     id="user-menu-button"
                                     aria-expanded="false"
-                                    aria-haspopup="true">
+                                    aria-haspopup="true"
+                                >
                                     <span class="absolute -inset-1.5"></span>
                                     <span class="sr-only">Open user menu</span>
                                     <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
@@ -84,18 +85,28 @@
                                 <!-- Active: "bg-gray-100", Not Active: "" -->
                                 <a
                                     href="{{ route('admin.profile') }}"
-                                    class="block px-4 py-2 text-sm text-gray-700" role="menuitem"
+                                    class="block px-4 py-2 text-sm text-gray-700"
+                                    role="menuitem"
                                     tabindex="-1"
                                     id="user-menu-item-0"
                                 >
                                     Your Profile
                                 </a>
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a>
+{{--                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>--}}
+                                <a
+                                    href="#sign-out"
+                                    class="block px-4 py-2 text-sm text-gray-700"
+                                    role="menuitem"
+                                    tabindex="-1"
+                                    id="user-menu-item-2"
+                                >
+                                    Sign out
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="-mr-2 flex md:hidden">
                     <!-- Mobile menu button -->
                     <button type="button" class="relative inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" aria-controls="mobile-menu" aria-expanded="false">
@@ -142,7 +153,12 @@
                     </button>
                 </div>
                 <div class="mt-3 space-y-1 px-2">
-                    <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Your Profile</a>
+                    <a
+                        href="{{ route('admin.profile') }}"
+                        class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+                    >
+                        Your Profile
+                    </a>
                     <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Settings</a>
                     <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Sign out</a>
                 </div>
@@ -163,6 +179,46 @@
             @yield('main')
         </div>
     </main>
+
+    <!-- SignOut Modal -->
+    <div id="sign-out" class="hidden target:block">
+        <div class="w-full h-full bg-black/70 absolute top-0 left-0">
+            <a href="" class="block w-full h-full cursor-default"></a>
+            <div class="w-2/5 mx-auto mt-20 relative -top-full bg-white p-5 rounded-lg">
+                <h2 class="font-bold">Sign Out</h2>
+                <form action="{{ route('admin.signout') }}" method="POST">
+                    @csrf
+                    <label for="id" class="block text-sm font-semibold leading-6 text-gray-900">ID</label>
+                    <input
+                        type="text"
+                        name="id"
+                        id="id"
+                        autocomplete="id"
+                        class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                        value="{{ \Illuminate\Support\Facades\Session::get('admin.id') }}"
+                        readonly
+                    >
+                    <label for="name" class="block text-sm font-semibold leading-6 text-gray-900 mt-2">名前</label>
+                    <input
+                        type="text"
+                        name="name"
+                        id="name"
+                        autocomplete="name"
+                        class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                        value="{{ \Illuminate\Support\Facades\Session::get('admin.name') }}"
+                    >
+                    <div class="mt-10">
+                        <button
+                            type="submit"
+                            class="block w-full rounded-md bg-red-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+                        >
+                            Sign Out
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 <script>
@@ -184,6 +240,12 @@
     //上記関数をボタンクリック時に実行
     userMenuBtn.addEventListener('click', ()=> {
         changeElement(userMenu);
+    }, false);
+
+    /* サインアウトモーダル表示の際にプロフィールメニュー非表示 */
+    let signOutBtn = document.getElementById('user-menu-item-2');
+    signOutBtn.addEventListener('click', ()=> {
+        changeElement(userMenu)
     }, false);
 </script>
 </html>

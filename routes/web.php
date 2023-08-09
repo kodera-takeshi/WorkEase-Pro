@@ -48,6 +48,8 @@ Route::group(['middleware' => ['admin']], function () {
         // profile
         Route::get('/profile', [AdminController::class, 'edit'])->name('admin.profile');
         Route::post('/profile', [AdminController::class, 'update'])->name('admin.profile.update');
+        // sign out
+        Route::post('/signout', [AdminController::class, 'signout'])->name('admin.signout');
     });
 
 });

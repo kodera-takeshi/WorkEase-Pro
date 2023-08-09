@@ -147,4 +147,11 @@ class AdminController extends Controller
 
         return Redirect::route('admin.profile');
     }
+
+    public function signout(Request $request)
+    {
+        $request->session()->forget('admin');
+
+        return Redirect::route('admin.signin');
+    }
 }
