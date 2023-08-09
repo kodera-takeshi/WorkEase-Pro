@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Service\AdminUserProfile;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -107,15 +108,29 @@ class AdminController extends Controller
 
     public function update(Request $request)
     {
+        $request_param = [
+            'id' => $request->id,
+            'file' =>$request->file,
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password
+        ];
         // 更新するレコードを取得
-        $admin_db = DB::table('admins')->where('id', $request->id);
+        $admin_db = DB::table('admins')->where('id', $request_param['id']);
         $admin = $admin_db->first();
         // パスワードチェック
-        $check = PasswordService::check($request->password, $admin->password);
+        $check = PasswordService::check($request_param['password'], $admin->password);
         if ($check) {
+            /* プロフィール画像の登録処理 */
+            $image_data = $request->file('file');
+            $image = AdminUserProfile::updateImage($image_data, $request_param);
+
+            // データ更新
             $param = [
                 'name' => $request->name,
-                'email' => $request->email
+                'email' => $request->email,
+                'img_url' => $image,
+                'updated_at' => date("Y-m-d H:i:s")
             ];
             $admin_db->update($param);
         }
@@ -128,7 +143,7 @@ class AdminController extends Controller
         | Error
         |  League\Flysystem\Filesystem::write(): Argument #2 ($contents) must be of type string, null given, called in /Users/koderatakeshi/tc-app/tc-app/vendor/laravel/framework/src/Illuminate/Filesystem/FilesystemAdapter.php on line 375
         */
-        // $s3 = Storage::disk('s3')->put('/', $request->file);
+//        $s3 = Storage::disk('s3')->put('/', $request->file);
 
         return Redirect::route('admin.profile');
     }
