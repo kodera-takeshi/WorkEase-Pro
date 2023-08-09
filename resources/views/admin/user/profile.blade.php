@@ -6,7 +6,7 @@
 
 @section('main')
     <div class="w-4/5 mx-auto">
-        <form action="{{ route('admin.profile.update') }}" method="POST">
+        <form action="{{ route('admin.profile.update') }}" method="POST" enctype='multipart/form-data'>
             @csrf
             <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
                 <div class="sm:col-span-2">

@@ -107,12 +107,26 @@ class AdminController extends Controller
 
     public function update(Request $request)
     {
+//        dd($request->file);
+//        dd([
+//            $request->id,
+//            $request->file,
+//            $request->name,
+//            $request->email,
+//            $request->password
+//        ]);
         // 更新するレコードを取得
         $admin_db = DB::table('admins')->where('id', $request->id);
         $admin = $admin_db->first();
         // パスワードチェック
         $check = PasswordService::check($request->password, $admin->password);
         if ($check) {
+            // プロフィールイメージの更新
+            $file_name = $request->id . '_' . $request->name;
+            Storage::putFileAs('AdminUserImages/', $request->file, $file_name); // strageに保存完了
+//            if ($admin['img_url'] != ) {}
+
+            // データ更新
             $param = [
                 'name' => $request->name,
                 'email' => $request->email
@@ -128,7 +142,7 @@ class AdminController extends Controller
         | Error
         |  League\Flysystem\Filesystem::write(): Argument #2 ($contents) must be of type string, null given, called in /Users/koderatakeshi/tc-app/tc-app/vendor/laravel/framework/src/Illuminate/Filesystem/FilesystemAdapter.php on line 375
         */
-        // $s3 = Storage::disk('s3')->put('/', $request->file);
+//        $s3 = Storage::disk('s3')->put('/', $request->file);
 
         return Redirect::route('admin.profile');
     }
