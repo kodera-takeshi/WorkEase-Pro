@@ -10,7 +10,7 @@
         <div class="w-1/6 ml-auto">
             <a
                 href="#add-status"
-                class="block rounded-lg rounded-full bg-green-500 text-white py-2 px-4 w-2/5 my-2 mx-auto text-center font-bold"
+                class="block rounded-lg rounded-full bg-green-500 text-white py-2 px-4 w-3/5 my-2 mx-auto text-center font-bold"
             >
                 追加
             </a>
@@ -61,7 +61,7 @@
                     <td class="border border-slate-500 px-3">
                         <a
                             href="#update-modal_{{ $item->id }}"
-                            class="block rounded-lg rounded-full bg-blue-500 text-white px-4 w-2/5 mx-auto text-center"
+                            class="block rounded-lg rounded-full bg-blue-500 text-white px-4 py-1 my-1 w-3/5 mx-auto text-center font-bold"
                         >
                             更新
                         </a>
@@ -107,7 +107,7 @@
                     <td class="border border-slate-500 px-3">
                         <a
                             href="#delete-modal_{{ $item->id }}"
-                            class="block rounded-lg rounded-full bg-red-500 text-white px-4 w-2/5 mx-auto text-center"
+                            class="block rounded-lg rounded-full bg-red-500 text-white px-4 py-1 my-1 w-3/5 mx-auto text-center font-bold"
                         >
                             削除
                         </a>
