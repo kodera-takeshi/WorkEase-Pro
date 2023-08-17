@@ -14,17 +14,7 @@
         <div class="w-1/6 ml-auto">
             @include('admin.components.table_create_button')
         </div>
-        <div id="add-status" class="hidden target:block">
-            <div class="block w-full h-full bg-black/70 absolute top-0 left-0">
-                <a href="" class="block w-full h-full cursor-default"></a>
-                <div class="w-2/5 mx-auto mt-20 relative -top-full bg-white p-5 rounded-lg">
-                    <form action="{{ route('admin.status.create') }}" method="POST">
-                        @csrf
-                        @include('admin.components.table_create_form', ['title'=>'ステータス'])
-                    </form>
-                </div>
-            </div>
-        </div>
+        @include('admin.components.table_create_form', ['title'=>'ステータス'])
 
         <table class="w-full table-fixed border-collapse border border-slate-400">
             <thead class="w-full">

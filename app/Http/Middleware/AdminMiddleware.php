@@ -29,7 +29,8 @@ class AdminMiddleware
             'id' => $admin->id,
             'name' => $admin->name,
             'email' => $admin->email,
-            'img_url' => $admin->img_url
+            'img_url' => $admin->img_url,
+            'role' => $admin->admin_role_id,
         ]);
         return $next($request);
     }
