@@ -89,7 +89,15 @@
             </thead>
             <tbody>
             @foreach($requests as $request)
-                <tr>
+                @if($request['status'] == '承認')
+                <tr class="bg-green-100">
+                    @elseif($request['status'] == '否認')
+                    <tr class="bg-red-100">
+                    @elseif($request['status'] == 'キャンセル')
+                    <tr class="bg-yellow-100">
+                    @else
+                    <tr>
+                    @endif
                     <td class="border border-slate-500 text-center">{{ $request['id'] }}</td>
                     <td class="border border-slate-500 px-3">{{ $request['classification'] }}</td>
                     <td class="border border-slate-500 px-3">{{ $request['before_status'] }}</td>

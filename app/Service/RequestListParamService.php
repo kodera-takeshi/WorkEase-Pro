@@ -8,10 +8,14 @@ class RequestListParamService
     {
         $list = [];
         foreach ($requests as $request) {
-            if ($request->change_employee_id) {
-                $status = '処理済み';
+            if ($request->approval_flg) {
+                $status = '承認';
+            } elseif($request->denial_flg) {
+                $status = '否認';
+            } elseif ($request->cancel_flg) {
+                $status = 'キャンセル';
             } else {
-                $status = '申請中';
+                $status = '処理中';
             }
             $param = [
                 'id' => $request->id,
