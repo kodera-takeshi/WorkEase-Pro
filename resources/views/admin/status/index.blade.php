@@ -10,43 +10,17 @@
 {{--            <p class="mt-2 text-lg leading-8 text-red-600">{{ $message }}</p>--}}
 {{--        </div>--}}
 
+        <!-- 更新 -->
         <div class="w-1/6 ml-auto">
-            <!--
-                todo:追加ボタン
-                ・ボタンのコンポーネント化
-                ・処理動作アイコンの追加
-             -->
-            <a
-                href="#add-status"
-                class="block rounded-lg rounded-full bg-green-500 text-white py-2 px-4 w-3/5 my-2 mx-auto mx-auto text-center font-bold"
-            >
-                追加
-            </a>
+            @include('admin.components.table_create_button')
         </div>
         <div id="add-status" class="hidden target:block">
             <div class="block w-full h-full bg-black/70 absolute top-0 left-0">
                 <a href="" class="block w-full h-full cursor-default"></a>
                 <div class="w-2/5 mx-auto mt-20 relative -top-full bg-white p-5 rounded-lg">
-                    <h2 class="font-bold">ステータスを追加</h2>
                     <form action="{{ route('admin.status.create') }}" method="POST">
                         @csrf
-                        <label for="name" class="block text-sm font-semibold leading-6 text-gray-900 mt-6">ステータス名</label>
-                        <input
-                            type="text"
-                            name="name"
-                            id="name"
-                            autocomplete="name"
-                            class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
-                            placeholder="追加するステータス名を入力してください。"
-                            required
-                        >
-                        <div class="mt-10">
-                            <button type="submit"
-                                    class="block w-full rounded-md bg-green-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
-                            >
-                                追加
-                            </button>
-                        </div>
+                        @include('admin.components.table_create_form', ['title'=>'ステータス'])
                     </form>
                 </div>
             </div>
