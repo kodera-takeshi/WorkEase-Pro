@@ -76,6 +76,7 @@
                                     <h2 class="font-bold">役職の更新</h2>
                                     <form action="{{ route('admin.managerial-position.update') }}" method="POST">
                                         @csrf
+                                        <!-- todo:権限の適用 -->
                                         @include('admin.components.table_update_form', ['id'=>$managerial_position->id, 'name'=>$managerial_position->name])
                                     </form>
                                 </div>

@@ -79,6 +79,7 @@
                                     <h2 class="font-bold">ステータスの更新</h2>
                                     <form action="{{ route('admin.status.update') }}" method="POST">
                                         @csrf
+                                        <!-- todo:権限の適用 -->
                                         @include('admin.components.table_update_form', ['id'=>$item->id, 'name'=>$item->name])
                                     </form>
                                 </div>
