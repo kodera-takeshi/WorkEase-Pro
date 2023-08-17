@@ -88,14 +88,14 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($status as $item)
+            @foreach($requests as $request)
                 <tr>
-                    <td class="border border-slate-500 text-center">1</td>
-                    <td class="border border-slate-500 px-3">ステータス登録</td>
-                    <td class="border border-slate-500 px-3"></td>
-                    <td class="border border-slate-500 px-3">ヨイショ山口</td>
-                    <td class="border border-slate-500 px-3">申請中</td>
-                    <td class="border border-slate-500 px-3">山崎</td>
+                    <td class="border border-slate-500 text-center">{{ $request['id'] }}</td>
+                    <td class="border border-slate-500 px-3">{{ $request['classification'] }}</td>
+                    <td class="border border-slate-500 px-3">{{ $request['before_status'] }}</td>
+                    <td class="border border-slate-500 px-3">{{ $request['after_status'] }}</td>
+                    <td class="border border-slate-500 px-3">{{ $request['status'] }}</td>
+                    <td class="border border-slate-500 px-3">{{ $request['change_employee'] }}</td>
                 </tr>
             @endforeach
             </tbody>
