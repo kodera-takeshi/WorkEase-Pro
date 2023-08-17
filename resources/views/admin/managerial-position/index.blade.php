@@ -71,5 +71,31 @@
             @endforeach
             </tbody>
         </table>
+
+        <h2 class="mt-5">TODO:申請ログテーブルの実装</h2>
+        <table class="w-full table-fixed border-collapse border border-slate-400">
+            <thead class="w-full">
+            <tr>
+                <th class="w-1/6 border border-slate-500 bg-slate-300">ID</th>
+                <th class="w-1/6 border border-slate-500 bg-slate-300 text-left px-3">申請区分</th>
+                <th class="w-1/6 border border-slate-500 bg-slate-300">変更前ステータス</th>
+                <th class="w-1/6 border border-slate-500 bg-slate-300">変更後ステータス</th>
+                <th class="w-1/6 border border-slate-500 bg-slate-300">ステータス</th>
+                <th class="w-1/6 border border-slate-500 bg-slate-300">変更社員ID</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach($managerial_positions as $managerial_position)
+                <tr>
+                    <td class="border border-slate-500 text-center">1</td>
+                    <td class="border border-slate-500 px-3">ステータス登録</td>
+                    <td class="border border-slate-500 px-3"></td>
+                    <td class="border border-slate-500 px-3">ヨイショ山口</td>
+                    <td class="border border-slate-500 px-3">申請中</td>
+                    <td class="border border-slate-500 px-3">山崎</td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
     </div>
 @endsection
