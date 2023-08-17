@@ -7,43 +7,17 @@
 @section('main')
     <div class="w-full mx-auto ">
 
+        <!-- 更新 -->
         <div class="w-1/6 ml-auto">
-            <!--
-                todo:追加ボタン
-                ・ボタンのコンポーネント化
-                ・処理動作アイコンの追加
-             -->
-            <a
-                href="#add-position"
-                class="block rounded-lg rounded-full bg-green-500 text-white py-2 px-4 w-3/5 my-2 mx-auto text-center font-bold"
-            >
-                追加
-            </a>
+            @include('admin.components.table_create_button')
         </div>
-        <div id="add-position" class="hidden target:block">
+        <div id="add-status" class="hidden target:block">
             <div class="block w-full h-full bg-black/70 absolute top-0 left-0">
                 <a href="" class="block w-full h-full cursor-default"></a>
                 <div class="w-2/5 mx-auto mt-20 relative -top-full bg-white p-5 rounded-lg">
-                    <h2 class="font-bold">役職を追加</h2>
                     <form action="{{ route('admin.managerial-position.create') }}" method="POST">
                         @csrf
-                        <label for="name" class="block text-sm font-semibold leading-6 text-gray-900 mt-6">役職名</label>
-                        <input
-                            type="text"
-                            name="name"
-                            id="name"
-                            autocomplete="name"
-                            class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
-                            placeholder="追加する役職名を入力してください。"
-                            required
-                        >
-                        <div class="mt-10">
-                            <button type="submit"
-                                    class="block w-full rounded-md bg-green-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
-                            >
-                                追加
-                            </button>
-                        </div>
+                        @include('admin.components.table_create_form', ['title'=>'役職'])
                     </form>
                 </div>
             </div>
@@ -66,15 +40,9 @@
                     <td class="border border-slate-500 px-3">
                         <!--
                             todo:更新ボタン
-                            ・ボタンのコンポーネント化
                             ・処理動作アイコンの追加
                          -->
-                        <a
-                            href="#update-modal_{{ $managerial_position->id }}"
-                            class="block rounded-lg rounded-full bg-blue-500 text-white px-4 py-1 my-1 w-3/5 mx-auto text-center font-bold"
-                        >
-                            更新
-                        </a>
+                        @include('admin.components.table_update_button', ['id' => $managerial_position->id])
                         <div id="update-modal_{{ $managerial_position->id }}" class="hidden target:block">
                             <div class="block w-full h-full bg-black/70 absolute top-0 left-0">
                                 <a href="" class="block w-full h-full cursor-default"></a>
@@ -82,34 +50,8 @@
                                     <h2 class="font-bold">役職の更新</h2>
                                     <form action="{{ route('admin.managerial-position.update') }}" method="POST">
                                         @csrf
-                                        <label for="id-{{ $managerial_position->id }}" class="block text-sm font-semibold leading-6 text-gray-900">ID</label>
-                                        <input
-                                            type="text"
-                                            name="id"
-                                            id="id-{{ $managerial_position->id }}"
-                                            autocomplete="id"
-                                            class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
-                                            value="{{ $managerial_position->id }}"
-                                            readonly
-                                        >
-                                        <label for="name-{{ $managerial_position->id }}" class="block text-sm font-semibold leading-6 text-gray-900 mt-2">ステータス</label>
-                                        <input
-                                            type="text"
-                                            name="name"
-                                            id="name-{{ $managerial_position->id }}"
-                                            autocomplete="name"
-                                            class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
-                                            value="{{ $managerial_position->name }}"
-                                            required
-                                        >
-                                        <div class="mt-10">
-                                            <button
-                                                type="submit"
-                                                class="block w-full rounded-md bg-blue-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-                                            >
-                                                更新
-                                            </button>
-                                        </div>
+                                        <!-- todo:権限の適用 -->
+                                        @include('admin.components.table_update_form', ['id'=>$managerial_position->id, 'name'=>$managerial_position->name])
                                     </form>
                                 </div>
                             </div>
@@ -118,15 +60,9 @@
                     <td class="border border-slate-500 px-3">
                         <!--
                             todo:削除ボタン
-                            ・ボタンのコンポーネント化
                             ・処理動作アイコンの追加
                          -->
-                        <a
-                            href="#delete-modal_{{ $managerial_position->id }}"
-                            class="block rounded-lg rounded-full bg-red-500 text-white px-4 py-1 my-1 w-3/5 mx-auto text-center font-bold"
-                        >
-                            削除
-                        </a>
+                        @include('admin.components.table_delete_button', ['id' => $managerial_position->id])
                         <div id="delete-modal_{{ $managerial_position->id }}" class="hidden target:block">
                             <div class="block w-full h-full bg-black/70 absolute top-0 left-0">
                                 <a href="" class="block w-full h-full cursor-default"></a>
@@ -134,35 +70,8 @@
                                     <h2 class="font-bold">役職の削除</h2>
                                     <form action="{{ route('admin.managerial-position.delete') }}" method="POST">
                                         @csrf
-                                        <label for="id-{{ $managerial_position->id }}" class="block text-sm font-semibold leading-6 text-gray-900">ID</label>
-                                        <input
-                                            type="text"
-                                            name="id"
-                                            id="id-{{ $managerial_position->id }}"
-                                            autocomplete="id"
-                                            class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
-                                            value="{{ $managerial_position->id }}"
-                                            readonly
-                                        >
-                                        <label for="delete-{{ $managerial_position->id }}" class="block text-sm font-semibold leading-6 text-gray-900 mt-2">
-                                            ステータスを削除する場合は、以下のフィールドに"削除"と入力してください
-                                        </label>
-                                        <input
-                                            type="text"
-                                            name="delete"
-                                            id="delete-{{ $managerial_position->id }}"
-                                            autocomplete="delete"
-                                            class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
-                                            placeholder="削除"
-                                            required
-                                        >
-                                        <div class="mt-10">
-                                            <button type="submit"
-                                                    class="block w-full rounded-md bg-red-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
-                                            >
-                                                更新
-                                            </button>
-                                        </div>
+                                        <!-- todo:権限の適用 -->
+                                        @include('admin.components.table_delete_form', ['id'=>$managerial_position->id])
                                     </form>
                                 </div>
                             </div>
