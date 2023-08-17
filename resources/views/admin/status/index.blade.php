@@ -14,7 +14,7 @@
         <div class="w-1/6 ml-auto">
             @include('admin.components.table_create_button')
         </div>
-        @include('admin.components.table_create_form', ['title'=>'ステータス'])
+        @include('admin.components.table_create_form', ['title'=>'ステータス', 'role'=>\Illuminate\Support\Facades\Session::get('admin.role')])
 
         <table class="w-full table-fixed border-collapse border border-slate-400">
             <thead class="w-full">

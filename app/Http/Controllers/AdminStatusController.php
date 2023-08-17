@@ -83,4 +83,20 @@ class AdminStatusController extends Controller
             return Redirect::route('admin.status');
         }
     }
+
+    public function request(Request $request)
+    {
+        $session = $request->session()->all();
+        $admin = $session['admin'];
+        $param = [
+            'classification' => 1,
+            'before_status' => null,
+            'after_status' => $request->name,
+            'request_employee_id' => $admin['id'],
+            'created_at' => date("Y-m-d H:i:s")
+        ];
+        DB::table('requests')->insert($param);
+
+        return Redirect::route('admin.status');
+    }
 }

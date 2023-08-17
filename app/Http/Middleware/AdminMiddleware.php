@@ -19,6 +19,7 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+//        $request->session()->forget('admin');
         $session = $request->session()->all();
         if(!isset($session['admin'])) {
             return Redirect::route('admin.signin');
