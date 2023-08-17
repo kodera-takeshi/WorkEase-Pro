@@ -86,7 +86,6 @@
                     <td class="border border-slate-500 px-3">
                         <!--
                             todo:削除ボタン
-                            ・ボタンのコンポーネント化
                             ・処理動作アイコンの追加
                          -->
                         @include('admin.components.table_delete_button', ['id' => $item->id])
@@ -97,6 +96,7 @@
                                     <h2 class="font-bold">社員ステータスの削除</h2>
                                     <form action="{{ route('admin.employee-status.delete') }}" method="POST">
                                         @csrf
+                                        <!-- todo:権限の適用 -->
                                         @include('admin.components.table_delete_form', ['id'=>$item->id])
                                     </form>
                                 </div>
