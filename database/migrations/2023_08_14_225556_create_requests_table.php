@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('before_status')->comment('変更前ステータス');
             $table->integer('after_status')->comment('変更後ステータス');
             $table->unsignedBigInteger('request_employee_id')->comment('申請社員ID');
-            $table->unsignedBigInteger('change_employee_id')->comment('変更社員ID')->nullable();
+            $table->unsignedBigInteger('change_employee_id')->comment('変更社員ID')->nullable()->default(null);
             $table->boolean('approval_flg')->comment('承認フラグ')->default(false);
             $table->boolean('denial_flg')->comment('否認フラグ')->default(false);
             $table->boolean('cancel_flg')->comment('キャンセルフラグ')->default(false);
