@@ -23,7 +23,7 @@ class RequestListParamService
                 'before_status' => $request->before_status, // 変更前ステータス
                 'after_status' => $request->after_status, // 変更後ステータス
                 'status' => $status, // ステータス
-                'change_employee' => $request->change_employee_id, // 変更社員名
+                'change_employee' => $request->change_employee_id, // todo:変更社員名を表示させる
             ];
             $list[] = $param;
         }
