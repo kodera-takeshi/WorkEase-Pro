@@ -2,6 +2,8 @@
 
 namespace App\Service;
 
+use Illuminate\Support\Facades\DB;
+
 class RequestListParamService
 {
     static function makeParam($requests)
@@ -28,6 +30,44 @@ class RequestListParamService
             $list[] = $param;
         }
 
+        return $list;
+    }
+
+    static function makeList($requests)
+    {
+        $list = [];
+        foreach ($requests as $request) {
+            // ステータスの取得
+            if ($request->approval_flg) {
+                $status = '承認';
+            } elseif($request->denial_flg) {
+                $status = '否認';
+            } elseif ($request->cancel_flg) {
+                $status = 'キャンセル';
+            } else {
+                $status = '処理中';
+            }
+            // todo:申請区分の振り分け
+
+            // 申請社員の名前を取得
+            $request_employee_data = DB::table('admins')
+                ->where('id', $request->request_employee_id)
+                ->first();
+            $request_employee = $request_employee_data->name;
+
+            $param = [
+                'id' => $request->id,
+                'classification' => $request->classification,
+                'before_status' => $request->before_status,
+                'after_status' => $request->after_status,
+                'status' => $status,
+                'request_employee_id' => $request->request_employee_id,
+                'request_employee' => $request_employee,
+                'created_at' => $request->created_at,
+                'updated_at' => $request->updated_at,
+            ];
+            $list[] = $param;
+        }
         return $list;
     }
 }
