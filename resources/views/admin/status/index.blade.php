@@ -35,20 +35,8 @@
                             todo:更新ボタン
                             ・処理動作アイコンの追加
                          -->
-                        @include('admin.components.table_update_button', ['id' => $item->id])
-                        <div id="update-modal_{{ $item->id }}" class="hidden target:block">
-                            <div class="block w-full h-full bg-black/70 absolute top-0 left-0">
-                                <a href="" class="block w-full h-full cursor-default"></a>
-                                <div class="w-2/5 mx-auto mt-20 relative -top-full bg-white p-5 rounded-lg">
-                                    <h2 class="font-bold">ステータスの更新</h2>
-                                    <form action="{{ route('admin.status.update') }}" method="POST">
-                                        @csrf
-                                        <!-- todo:権限の適用 -->
-                                        @include('admin.components.table_update_form', ['id'=>$item->id, 'name'=>$item->name])
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                        @include('admin.components.table_update_button', ['id' => $item->id, 'name'=>$item->name])
+                        @include('admin.components.table_update_form', ['title'=>'ステータス', 'id'=>$item->id, 'name'=>$item->name, 'role'=>\Illuminate\Support\Facades\Session::get('admin.role')])
                     </td>
                     <td class="border border-slate-500 px-3">
                         <!--
