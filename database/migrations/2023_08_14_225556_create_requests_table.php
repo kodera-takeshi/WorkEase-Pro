@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('requests', function (Blueprint $table) {
             $table->id();
             $table->integer('classification')->comment('申請区分');
-            $table->integer('before_status')->comment('変更前ステータス')->nullable();
+            $table->string('before_status')->comment('変更前ステータス')->nullable();
             $table->string('after_status')->comment('変更後ステータス');
             $table->unsignedBigInteger('request_employee_id')->comment('申請社員ID');
             $table->unsignedBigInteger('change_employee_id')->comment('変更社員ID')->nullable()->default(null);
