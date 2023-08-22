@@ -19,6 +19,7 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+//        $request->session()->forget('admin');
         $session = $request->session()->all();
         if(!isset($session['admin'])) {
             return Redirect::route('admin.signin');
@@ -29,7 +30,8 @@ class AdminMiddleware
             'id' => $admin->id,
             'name' => $admin->name,
             'email' => $admin->email,
-            'img_url' => $admin->img_url
+            'img_url' => $admin->img_url,
+            'role' => $admin->admin_role_id,
         ]);
         return $next($request);
     }

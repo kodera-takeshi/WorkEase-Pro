@@ -11,17 +11,7 @@
         <div class="w-1/6 ml-auto">
             @include('admin.components.table_create_button')
         </div>
-        <div id="add-status" class="hidden target:block">
-            <div class="block w-full h-full bg-black/70 absolute top-0 left-0">
-                <a href="" class="block w-full h-full cursor-default"></a>
-                <div class="w-2/5 mx-auto mt-20 relative -top-full bg-white p-5 rounded-lg">
-                    <form action="{{ route('admin.employee-status.create') }}" method="POST">
-                        @csrf
-                        @include('admin.components.table_create_form', ['title'=>'社員ステータス'])
-                    </form>
-                </div>
-            </div>
-        </div>
+        @include('admin.components.table_create_form', ['title'=>'社員ステータス', 'role'=>\Illuminate\Support\Facades\Session::get('admin.role')])
 
         <table class="w-full table-fixed border-collapse border border-slate-400">
             <thead class="w-full">
@@ -77,6 +67,32 @@
                             </div>
                         </div>
                     </td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+
+        <h2 class="mt-5">TODO:申請ログテーブルの実装</h2>
+        <table class="w-full table-fixed border-collapse border border-slate-400">
+            <thead class="w-full">
+            <tr>
+                <th class="w-1/6 border border-slate-500 bg-slate-300">ID</th>
+                <th class="w-1/6 border border-slate-500 bg-slate-300 text-left px-3">申請区分</th>
+                <th class="w-1/6 border border-slate-500 bg-slate-300">変更前ステータス</th>
+                <th class="w-1/6 border border-slate-500 bg-slate-300">変更後ステータス</th>
+                <th class="w-1/6 border border-slate-500 bg-slate-300">ステータス</th>
+                <th class="w-1/6 border border-slate-500 bg-slate-300">変更社員ID</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach($employee_status as $item)
+                <tr>
+                    <td class="border border-slate-500 text-center">1</td>
+                    <td class="border border-slate-500 px-3">ステータス登録</td>
+                    <td class="border border-slate-500 px-3"></td>
+                    <td class="border border-slate-500 px-3">ヨイショ山口</td>
+                    <td class="border border-slate-500 px-3">申請中</td>
+                    <td class="border border-slate-500 px-3">山崎</td>
                 </tr>
             @endforeach
             </tbody>

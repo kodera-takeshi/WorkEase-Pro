@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminCompanyController;
 use App\Http\Controllers\AdminStatusController;
 use App\Http\Controllers\AdminEmployeeStatusController;
 use App\Http\Controllers\AdminManagerialPositionController;
+use App\Http\Controllers\AdminRequestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +37,7 @@ Route::group(['middleware' => ['admin']], function () {
         Route::post('/status',[AdminStatusController::class, 'update'])->name('admin.status.update');
         Route::post('/status/create',[AdminStatusController::class, 'create'])->name('admin.status.create');
         Route::post('/status/delete',[AdminStatusController::class, 'delete'])->name('admin.status.delete');
+        Route::post('/status/request',[AdminStatusController::class, 'request'])->name('admin.status.request');
         // employee_status
         Route::get('/employee-status',[AdminEmployeeStatusController::class, 'index'])->name('admin.employee-status');
         Route::post('/employee-status',[AdminEmployeeStatusController::class, 'update'])->name('admin.employee-status.update');
@@ -46,6 +48,9 @@ Route::group(['middleware' => ['admin']], function () {
         Route::post('/managerial-position', [AdminManagerialPositionController::class, 'update'])->name('admin.managerial-position.update');
         Route::post('/managerial-position/create', [AdminManagerialPositionController::class, 'create'])->name('admin.managerial-position.create');
         Route::post('/managerial-position/delete', [AdminManagerialPositionController::class, 'delete'])->name('admin.managerial-position.delete');
+        // requests
+        Route::get('/request', [AdminRequestController::class, 'index'])->name('admin.requests');
+        Route::post('/request/approval', [AdminRequestController::class, 'approval'])->name('admin.requests.approval');
         // profile
         Route::get('/profile', [AdminController::class, 'edit'])->name('admin.profile');
         Route::post('/profile', [AdminController::class, 'update'])->name('admin.profile.update');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Service\DeleteService;
+use App\Service\RequestListParamService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -14,17 +15,29 @@ use Illuminate\Support\Facades\Redirect;
 class AdminStatusController extends Controller
 {
     /**
+     * @param Request $request
      * @return View
      */
-    public function index(): view
+    public function index(Request $request): view
     {
+        $session = $request->session()->all();
+        $admin = $session['admin'];
+
         $status = DB::table('status')
             ->where('del_flg', false)
             ->get()
             ->all();
 
+        $request = DB::table('requests')
+            ->where('request_employee_id', $admin['id'])
+            ->get()
+            ->all();
+//        dd($request);
+        $request_list_param = RequestListParamService::makeParam($request);
+
         return view('admin.status.index', [
             'status' => $status,
+            'requests' => $request_list_param
         ]);
     }
 
@@ -82,5 +95,21 @@ class AdminStatusController extends Controller
         } else {
             return Redirect::route('admin.status');
         }
+    }
+
+    public function request(Request $request)
+    {
+        $session = $request->session()->all();
+        $admin = $session['admin'];
+        $param = [
+            'classification' => 1,
+            'before_status' => null,
+            'after_status' => $request->name,
+            'request_employee_id' => $admin['id'],
+            'created_at' => date("Y-m-d H:i:s")
+        ];
+        DB::table('requests')->insert($param);
+
+        return Redirect::route('admin.status');
     }
 }

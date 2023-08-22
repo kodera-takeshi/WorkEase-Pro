@@ -35,6 +35,9 @@
                             <a href="{{ route('admin.status') }}" class="text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">ステータス</a>
                             <a href="{{ route('admin.employee-status') }}" class="text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">社員ステータス</a>
                             <a href="{{ route('admin.managerial-position') }}" class="text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">役職</a>
+                            @if(\Illuminate\Support\Facades\Session::get('admin.role') <= 2)
+                                <a href="{{ route('admin.requests') }}" class="text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">申請一覧</a>
+                            @endif
                         </div>
                     </div>
                 </div>
