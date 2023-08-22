@@ -11,18 +11,46 @@ class AdminRequestController extends Controller
 {
     public function index()
     {
-        $requests = DB::table('requests');
-
         // 新規承認取得
-        $requests = $requests
+        $requests = DB::table('requests')
             ->where('approval_flg', false)
             ->where('denial_flg', false)
             ->where('cancel_flg', false);
-
         $requests = $requests->get()->all();
         $requests = RequestListParamService::makeList($requests);
-//        dd($requests);
-        return view('admin.requests.index', ['requests'=>$requests]);
+
+        // 承認済み申請取得
+        $approved_requests = DB::table('requests')
+            ->where('approval_flg', true)
+            ->where('denial_flg', false)
+            ->where('cancel_flg', false);
+        $approved_requests = $approved_requests->get()->all();
+        $approved_requests = RequestListParamService::makeList($approved_requests);
+
+        // 否認済み申請取得
+        $denied_requests = DB::table('requests')
+            ->where('approval_flg', false)
+            ->where('denial_flg', true)
+            ->where('cancel_flg', false);
+        $denied_requests = $denied_requests->get()->all();
+        $denied_requests = RequestListParamService::makeList($denied_requests);
+
+        // キャンセル済み申請取得
+        $canceled_requests = DB::table('requests')
+            ->where('approval_flg', false)
+            ->where('denial_flg', false)
+            ->where('cancel_flg', true);
+        $canceled_requests = $canceled_requests->get()->all();
+        $canceled_requests = RequestListParamService::makeList($canceled_requests);
+
+        $table_list = [
+            'requests' => $requests,
+            'approved_requests' => $approved_requests,
+            'denied_requests' => $denied_requests,
+            'canceled_requests' => $canceled_requests
+        ];
+//        dd($table_list);
+        return view('admin.requests.index', $table_list);
     }
 
     public function approval(Request $request)
@@ -40,6 +68,7 @@ class AdminRequestController extends Controller
             'date' => date("Y-m-d H:i:s")
         ];
         switch ($approval_request->classification) {
+            // 1 : ステータス追加
             case 1:
                 DB::table('status')->insert([
                     'name' => $param['after_status'],
@@ -53,8 +82,9 @@ class AdminRequestController extends Controller
         $approval_request = DB::table('requests')
             ->where('id', $request_id)
             ->update([
-                'change_employee_id' => $param['change_employee_id'],
+                'change_employee_id' => $request->session()->get('admin.id'),
                 'approval_flg'=>true,
+                'updated_at' => date("Y-m-d H:i:s")
             ]);
 
         return Redirect::route('admin.requests');
