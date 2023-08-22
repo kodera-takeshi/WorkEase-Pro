@@ -54,6 +54,11 @@ class RequestListParamService
                 ->where('id', $request->request_employee_id)
                 ->first();
             $request_employee = $request_employee_data->name;
+            // 変更社員の名前を取得
+            $change_employee_data = DB::table('admins')
+                ->where('id', $request->change_employee_id)
+                ->first();
+            $change_employee = $change_employee_data?->name;
 
             $param = [
                 'id' => $request->id,
@@ -63,6 +68,8 @@ class RequestListParamService
                 'status' => $status,
                 'request_employee_id' => $request->request_employee_id,
                 'request_employee' => $request_employee,
+                'change_employee_id' => $request->change_employee_id,
+                'change_employee' => $change_employee,
                 'created_at' => $request->created_at,
                 'updated_at' => $request->updated_at,
             ];
