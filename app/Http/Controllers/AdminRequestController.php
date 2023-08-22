@@ -6,6 +6,7 @@ use App\Service\RequestListParamService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use App\Service\ChangeRequestDataService;
 
 class AdminRequestController extends Controller
 {
@@ -67,17 +68,8 @@ class AdminRequestController extends Controller
             'change_employee_id' => $approval_request->change_employee_id,
             'date' => date("Y-m-d H:i:s")
         ];
-        switch ($approval_request->classification) {
-            // 1 : ステータス追加
-            case 1:
-                DB::table('status')->insert([
-                    'name' => $param['after_status'],
-                    'created_at' => date("Y-m-d H:i:s"),
-                    'updated_at' => date("Y-m-d H:i:s"),
-                    'del_flg' => false
-                ]);
-                break;
-        }
+
+        $change_request = ChangeRequestDataService::changeRequest($approval_request->classification, $param['after_status']);
 
         $approval_request = DB::table('requests')
             ->where('id', $request_id)
