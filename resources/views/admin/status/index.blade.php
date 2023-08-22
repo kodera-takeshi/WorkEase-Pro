@@ -44,19 +44,7 @@
                             ・処理動作アイコンの追加
                          -->
                         @include('admin.components.table_delete_button', ['id' => $item->id])
-                        <div id="delete-modal_{{ $item->id }}" class="hidden target:block">
-                            <div class="block w-full h-full bg-black/70 absolute top-0 left-0">
-                                <a href="" class="block w-full h-full cursor-default"></a>
-                                <div class="w-2/5 mx-auto mt-20 relative -top-full bg-white p-5 rounded-lg">
-                                    <h2 class="font-bold">ステータスの削除</h2>
-                                    <form action="{{ route('admin.status.delete') }}" method="POST">
-                                        @csrf
-                                        <!-- todo:権限の適用 -->
-                                        @include('admin.components.table_delete_form', ['id'=>$item->id])
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                        @include('admin.components.table_delete_form', ['title'=>'ステータス', 'id'=>$item->id, 'role'=>\Illuminate\Support\Facades\Session::get('admin.role')])
                     </td>
                 </tr>
             @endforeach

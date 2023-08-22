@@ -134,4 +134,26 @@ class AdminStatusController extends Controller
 
         return Redirect::route('admin.status');
     }
+
+    public function deleteRequest(Request $request)
+    {
+        $id = $request->id;
+        $before_status = DB::table('status')
+            ->where('id', $id)
+            ->first();
+        $before_status_name = $before_status->name;
+
+        $session = $request->session()->all();
+        $admin = $session['admin'];
+        $param = [
+            'classification' => 3,
+            'before_status' => $before_status_name,
+            'after_status' => $before_status_name,
+            'request_employee_id' => $admin['id'],
+            'created_at' => date("Y-m-d H:i:s")
+        ];
+        DB::table('requests')->insert($param);
+
+        return Redirect::route('admin.status');
+    }
 }
