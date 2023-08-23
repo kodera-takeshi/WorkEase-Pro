@@ -30,9 +30,10 @@ class AdminStatusController extends Controller
 
         $request = DB::table('requests')
             ->where('request_employee_id', $admin['id'])
+            ->where('classification', '>=', 1)
+            ->where('classification', '<=', 3)
             ->get()
             ->all();
-//        dd($request);
         $request_list_param = RequestListParamService::makeParam($request);
 
         return view('admin.status.index', [

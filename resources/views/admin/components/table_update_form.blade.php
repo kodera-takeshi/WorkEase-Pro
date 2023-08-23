@@ -11,13 +11,13 @@
             @endif
 
             @if($title == '社員ステータス' && $role <= 2)
-                <form action="{{ route('admin.employee-status.create') }}" method="POST">
+                <form action="{{ route('admin.employee-status.update') }}" method="POST">
             @elseif($title == '社員ステータス' && $role >= 3)
-                <form action="#" method="POST">
+                <form action="{{ route('admin.employee-status.update-request') }}" method="POST">
             @endif
 
             @if($title == '役職' && $role <= 2)
-                <form action="{{ route('admin.managerial-position.create') }}" method="POST">
+                <form action="{{ route('admin.managerial-position.update') }}" method="POST">
             @elseif($title == '役職' && $role >= 3)
                 <form action="#" method="POST">
             @endif
