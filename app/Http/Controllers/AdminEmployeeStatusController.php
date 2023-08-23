@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Service\DeleteService;
+use App\Service\RequestListParamService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -16,15 +17,27 @@ class AdminEmployeeStatusController extends Controller
     /**
      * @return View
      */
-    public function index(): view
+    public function index(Request $request): view
     {
+        $session = $request->session()->all();
+        $admin = $session['admin'];
+
         $employee_status = DB::table('employee_status')
             ->where('del_flg', false)
             ->get()
             ->all();
 
+        $request = DB::table('requests')
+            ->where('request_employee_id', $admin['id'])
+            ->where('classification', '>=',4)
+            ->where('classification', '<=',6)
+            ->get()
+            ->all();
+        $request_list_param = RequestListParamService::makeParam($request);
+
         return view('admin.employee-status.index', [
-            'employee_status' => $employee_status
+            'employee_status' => $employee_status,
+            'requests' => $request_list_param
         ]);
     }
 
@@ -83,5 +96,66 @@ class AdminEmployeeStatusController extends Controller
         } else {
             return Redirect::route('admin.employee-status');
         }
+    }
+
+    public function request(Request $request)
+    {
+        $session = $request->session()->all();
+        $admin = $session['admin'];
+
+        $param = [
+            'classification' => 4,
+            'before_status' => null,
+            'after_status' => $request->name,
+            'request_employee_id' => $admin['id'],
+            'created_at' => date("Y-m-d H:i:s")
+        ];
+        DB::table('requests')->insert($param);
+
+        return Redirect::route('admin.employee-status');
+    }
+
+    public function updateRequest(Request $request)
+    {
+        $id = $request->id;
+        $before_status = DB::table('status')
+            ->where('id', $id)
+            ->first();
+        $before_status_name = $before_status->name;
+
+        $session = $request->session()->all();
+        $admin = $session['admin'];
+        $param = [
+            'classification' => 5,
+            'before_status' => $before_status_name,
+            'after_status' => $request->name,
+            'request_employee_id' => $admin['id'],
+            'created_at' => date("Y-m-d H:i:s")
+        ];
+        DB::table('requests')->insert($param);
+
+        return Redirect::route('admin.employee-status');
+    }
+
+    public function deleteRequest(Request $request)
+    {
+        $id = $request->id;
+        $before_status = DB::table('status')
+            ->where('id', $id)
+            ->first();
+        $before_status_name = $before_status->name;
+
+        $session = $request->session()->all();
+        $admin = $session['admin'];
+        $param = [
+            'classification' => 6,
+            'before_status' => $before_status_name,
+            'after_status' => $before_status_name,
+            'request_employee_id' => $admin['id'],
+            'created_at' => date("Y-m-d H:i:s")
+        ];
+        DB::table('requests')->insert($param);
+
+        return Redirect::route('admin.employee-status');
     }
 }

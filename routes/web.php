@@ -45,6 +45,9 @@ Route::group(['middleware' => ['admin']], function () {
         Route::post('/employee-status',[AdminEmployeeStatusController::class, 'update'])->name('admin.employee-status.update');
         Route::post('/employee-status/create',[AdminEmployeeStatusController::class, 'create'])->name('admin.employee-status.create');
         Route::post('/employee-status/delete',[AdminEmployeeStatusController::class, 'delete'])->name('admin.employee-status.delete');
+        Route::post('/employee-status/request',[AdminEmployeeStatusController::class, 'request'])->name('admin.employee-status.request');
+        Route::post('/employee-status/update/request',[AdminEmployeeStatusController::class, 'updateRequest'])->name('admin.employee-status.update-request');
+        Route::post('/employee-status/delete/request',[AdminEmployeeStatusController::class, 'deleteRequest'])->name('admin.employee-status.delete-request');
         // managerial_positions
         Route::get('/managerial-position', [AdminManagerialPositionController::class, 'index'])->name('admin.managerial-position');
         Route::post('/managerial-position', [AdminManagerialPositionController::class, 'update'])->name('admin.managerial-position.update');
