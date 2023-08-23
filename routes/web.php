@@ -53,6 +53,9 @@ Route::group(['middleware' => ['admin']], function () {
         Route::post('/managerial-position', [AdminManagerialPositionController::class, 'update'])->name('admin.managerial-position.update');
         Route::post('/managerial-position/create', [AdminManagerialPositionController::class, 'create'])->name('admin.managerial-position.create');
         Route::post('/managerial-position/delete', [AdminManagerialPositionController::class, 'delete'])->name('admin.managerial-position.delete');
+        Route::post('/managerial-position/request', [AdminManagerialPositionController::class, 'request'])->name('admin.managerial-position.request');
+        Route::post('/managerial-position/update/request', [AdminManagerialPositionController::class, 'updateRequest'])->name('admin.managerial-position.update-request');
+        Route::post('/managerial-position/delete/request', [AdminManagerialPositionController::class, 'deleteRequest'])->name('admin.managerial-position.delete-request');
         // requests
         Route::get('/request', [AdminRequestController::class, 'index'])->name('admin.requests');
         Route::post('/request/approval', [AdminRequestController::class, 'approval'])->name('admin.requests.approval');

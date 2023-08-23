@@ -41,19 +41,7 @@
                             ・処理動作アイコンの追加
                          -->
                         @include('admin.components.table_delete_button', ['id' => $managerial_position->id])
-                        <div id="delete-modal_{{ $managerial_position->id }}" class="hidden target:block">
-                            <div class="block w-full h-full bg-black/70 absolute top-0 left-0">
-                                <a href="" class="block w-full h-full cursor-default"></a>
-                                <div class="w-2/5 mx-auto mt-20 relative -top-full bg-white p-5 rounded-lg">
-                                    <h2 class="font-bold">役職の削除</h2>
-                                    <form action="{{ route('admin.managerial-position.delete') }}" method="POST">
-                                        @csrf
-                                        <!-- todo:権限の適用 -->
-                                        @include('admin.components.table_delete_form', ['id'=>$managerial_position->id])
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                        @include('admin.components.table_delete_form', ['title'=>'役職', 'id'=>$managerial_position->id, 'role'=>\Illuminate\Support\Facades\Session::get('admin.role')])
                     </td>
                 </tr>
             @endforeach
@@ -73,16 +61,24 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($managerial_positions as $managerial_position)
-                <tr>
-                    <td class="border border-slate-500 text-center">1</td>
-                    <td class="border border-slate-500 px-3">ステータス登録</td>
-                    <td class="border border-slate-500 px-3"></td>
-                    <td class="border border-slate-500 px-3">ヨイショ山口</td>
-                    <td class="border border-slate-500 px-3">申請中</td>
-                    <td class="border border-slate-500 px-3">山崎</td>
-                </tr>
-            @endforeach
+            @foreach($requests as $request)
+                @if($request['status'] == '承認')
+                    <tr class="bg-green-100">
+                @elseif($request['status'] == '否認')
+                    <tr class="bg-red-100">
+                @elseif($request['status'] == 'キャンセル')
+                    <tr class="bg-yellow-100">
+                @else
+                    <tr>
+                        @endif
+                        <td class="border border-slate-500 text-center">{{ $request['id'] }}</td>
+                        <td class="border border-slate-500 px-3">{{ $request['classification'] }}</td>
+                        <td class="border border-slate-500 px-3">{{ $request['before_status'] }}</td>
+                        <td class="border border-slate-500 px-3">{{ $request['after_status'] }}</td>
+                        <td class="border border-slate-500 px-3">{{ $request['status'] }}</td>
+                        <td class="border border-slate-500 px-3">{{ $request['change_employee'] }}</td>
+                    </tr>
+                    @endforeach
             </tbody>
         </table>
     </div>

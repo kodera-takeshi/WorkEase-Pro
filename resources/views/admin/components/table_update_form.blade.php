@@ -19,7 +19,7 @@
             @if($title == '役職' && $role <= 2)
                 <form action="{{ route('admin.managerial-position.update') }}" method="POST">
             @elseif($title == '役職' && $role >= 3)
-                <form action="#" method="POST">
+                <form action="{{ route('admin.managerial-position.update-request') }}" method="POST">
             @endif
 
                 @csrf

@@ -118,7 +118,7 @@ class AdminEmployeeStatusController extends Controller
     public function updateRequest(Request $request)
     {
         $id = $request->id;
-        $before_status = DB::table('status')
+        $before_status = DB::table('employee_status')
             ->where('id', $id)
             ->first();
         $before_status_name = $before_status->name;
@@ -140,7 +140,7 @@ class AdminEmployeeStatusController extends Controller
     public function deleteRequest(Request $request)
     {
         $id = $request->id;
-        $before_status = DB::table('status')
+        $before_status = DB::table('employee_status')
             ->where('id', $id)
             ->first();
         $before_status_name = $before_status->name;
