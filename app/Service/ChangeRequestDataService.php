@@ -6,6 +6,12 @@ use Illuminate\Support\Facades\DB;
 
 class ChangeRequestDataService
 {
+    /**
+     * @param $classification // 申請区分
+     * @param $id // 変更元ID
+     * @param $status // 変更後ステータス
+     * @return void
+     */
     static function changeRequest($classification, $id, $status)
     {
         switch ($classification) {
