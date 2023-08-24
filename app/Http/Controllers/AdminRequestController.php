@@ -63,6 +63,7 @@ class AdminRequestController extends Controller
             ->first();
 
         $param = [
+            'original_id' => $approval_request->original_id,
             'before_status' => $approval_request->before_status,
             'after_status' => $approval_request->after_status,
             'request_employee_id' => $approval_request->request_employee_id,
@@ -70,7 +71,7 @@ class AdminRequestController extends Controller
             'date' => date("Y-m-d H:i:s")
         ];
 
-        $change_request = ChangeRequestDataService::changeRequest($approval_request->classification, $approval_request->id, $approval_request->after_status);
+        $change_request = ChangeRequestDataService::changeRequest($approval_request->classification, $param['original_id'], $param['after_status']);
 
         $approval_request = DB::table('requests')
             ->where('id', $request_id)

@@ -105,6 +105,7 @@ class AdminEmployeeStatusController extends Controller
 
         $param = [
             'classification' => 4,
+            'original_id' => null,
             'before_status' => null,
             'after_status' => $request->name,
             'request_employee_id' => $admin['id'],
@@ -121,12 +122,14 @@ class AdminEmployeeStatusController extends Controller
         $before_status = DB::table('employee_status')
             ->where('id', $id)
             ->first();
+        $original_id = $before_status->id;
         $before_status_name = $before_status->name;
 
         $session = $request->session()->all();
         $admin = $session['admin'];
         $param = [
             'classification' => 5,
+            'original_id' => $original_id,
             'before_status' => $before_status_name,
             'after_status' => $request->name,
             'request_employee_id' => $admin['id'],
@@ -143,12 +146,14 @@ class AdminEmployeeStatusController extends Controller
         $before_status = DB::table('employee_status')
             ->where('id', $id)
             ->first();
+        $original_id = $before_status->id;
         $before_status_name = $before_status->name;
 
         $session = $request->session()->all();
         $admin = $session['admin'];
         $param = [
             'classification' => 6,
+            'original_id' => $original_id,
             'before_status' => $before_status_name,
             'after_status' => $before_status_name,
             'request_employee_id' => $admin['id'],
