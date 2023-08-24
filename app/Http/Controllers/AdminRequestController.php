@@ -83,4 +83,19 @@ class AdminRequestController extends Controller
 
         return Redirect::route('admin.requests');
     }
+
+    public function denial(Request $request)
+    {
+        $request_id = $request->id;
+
+        $approval_request = DB::table('requests')
+            ->where('id', $request_id)
+            ->update([
+                'change_employee_id' => $request->session()->get('admin.id'),
+                'denial_flg'=>true,
+                'updated_at' => date("Y-m-d H:i:s")
+            ]);
+
+        return Redirect::route('admin.requests');
+    }
 }

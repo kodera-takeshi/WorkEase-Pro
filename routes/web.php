@@ -59,6 +59,7 @@ Route::group(['middleware' => ['admin']], function () {
         // requests
         Route::get('/request', [AdminRequestController::class, 'index'])->name('admin.requests');
         Route::post('/request/approval', [AdminRequestController::class, 'approval'])->name('admin.requests.approval');
+        Route::post('/request/denial', [AdminRequestController::class, 'denial'])->name('admin.requests.denial');
         // profile
         Route::get('/profile', [AdminController::class, 'edit'])->name('admin.profile');
         Route::post('/profile', [AdminController::class, 'update'])->name('admin.profile.update');
