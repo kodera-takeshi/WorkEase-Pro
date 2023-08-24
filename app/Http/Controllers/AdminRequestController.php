@@ -61,7 +61,9 @@ class AdminRequestController extends Controller
         $approval_request = DB::table('requests')
             ->where('id', $request_id)
             ->first();
+
         $param = [
+            'original_id' => $approval_request->original_id,
             'before_status' => $approval_request->before_status,
             'after_status' => $approval_request->after_status,
             'request_employee_id' => $approval_request->request_employee_id,
@@ -69,13 +71,28 @@ class AdminRequestController extends Controller
             'date' => date("Y-m-d H:i:s")
         ];
 
-        $change_request = ChangeRequestDataService::changeRequest($approval_request->classification, $param['after_status']);
+        $change_request = ChangeRequestDataService::changeRequest($approval_request->classification, $param['original_id'], $param['after_status']);
 
         $approval_request = DB::table('requests')
             ->where('id', $request_id)
             ->update([
                 'change_employee_id' => $request->session()->get('admin.id'),
                 'approval_flg'=>true,
+                'updated_at' => date("Y-m-d H:i:s")
+            ]);
+
+        return Redirect::route('admin.requests');
+    }
+
+    public function denial(Request $request)
+    {
+        $request_id = $request->id;
+
+        $approval_request = DB::table('requests')
+            ->where('id', $request_id)
+            ->update([
+                'change_employee_id' => $request->session()->get('admin.id'),
+                'denial_flg'=>true,
                 'updated_at' => date("Y-m-d H:i:s")
             ]);
 

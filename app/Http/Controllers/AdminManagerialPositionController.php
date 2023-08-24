@@ -104,6 +104,7 @@ class AdminManagerialPositionController extends Controller
 
         $param = [
             'classification' => 7,
+            'original_id' => null,
             'before_status' => null,
             'after_status' => $request->name,
             'request_employee_id' => $admin['id'],
@@ -120,12 +121,14 @@ class AdminManagerialPositionController extends Controller
         $before_status = DB::table('managerial_positions')
             ->where('id', $id)
             ->first();
+        $original_id = $before_status->id;
         $before_status_name = $before_status->name;
 
         $session = $request->session()->all();
         $admin = $session['admin'];
         $param = [
             'classification' => 8,
+            'original_id' => $original_id,
             'before_status' => $before_status_name,
             'after_status' => $request->name,
             'request_employee_id' => $admin['id'],
@@ -142,12 +145,14 @@ class AdminManagerialPositionController extends Controller
         $before_status = DB::table('managerial_positions')
             ->where('id', $id)
             ->first();
+        $original_id = $before_status->id;
         $before_status_name = $before_status->name;
 
         $session = $request->session()->all();
         $admin = $session['admin'];
         $param = [
             'classification' => 9,
+            'original_id' => $original_id,
             'before_status' => $before_status_name,
             'after_status' => $before_status_name,
             'request_employee_id' => $admin['id'],

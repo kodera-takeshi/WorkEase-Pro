@@ -29,7 +29,7 @@
                         @include('admin.components.request_approval', ['id' => $request['id'],'request_employee_id'=>$request['request_employee_id'], 'request_employee'=>$request['request_employee']])
                     </td>
                     <td class="border border-slate-500 text-center">
-                        {{ $request['id'] }}
+                        @include('admin.components.request_denial', ['id' => $request['id'],'request_employee_id'=>$request['request_employee_id'], 'request_employee'=>$request['request_employee']])
                     </td>
                 </tr>
             @endforeach
