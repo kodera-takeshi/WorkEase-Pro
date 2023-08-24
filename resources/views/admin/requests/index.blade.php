@@ -21,7 +21,7 @@
             <tbody>
             @foreach($requests as $request)
                 <tr>
-                    <td class="border border-slate-500 text-center">{{ $request['classification'] }}</td>
+                    <td class="border border-slate-500 text-center">{{ \App\Enums\RequestClassificationEnum::getDescription($request['classification']) }}</td>
                     <td class="border border-slate-500 text-center">{{ $request['before_status'] }}</td>
                     <td class="border border-slate-500 text-center">{{ $request['after_status'] }}</td>
                     <td class="border border-slate-500 text-center">{{ $request['request_employee'] }}</td>
@@ -51,7 +51,7 @@
             <tbody>
             @foreach($approved_requests as $approved_request)
                 <tr>
-                    <td class="border border-slate-500 text-center">{{ $approved_request['classification'] }}</td>
+                    <td class="border border-slate-500 text-center">{{ \App\Enums\RequestClassificationEnum::getDescription($approved_request['classification']) }}</td>
                     <td class="border border-slate-500 text-center">{{ $approved_request['before_status'] }}</td>
                     <td class="border border-slate-500 text-center">{{ $approved_request['after_status'] }}</td>
                     <td class="border border-slate-500 text-center">{{ $approved_request['request_employee'] }}</td>
@@ -77,7 +77,7 @@
             <tbody>
             @foreach($denied_requests as $denied_request)
                 <tr>
-                    <td class="border border-slate-500 text-center">{{ $denied_request['classification'] }}</td>
+                    <td class="border border-slate-500 text-center">{{ \App\Enums\RequestClassificationEnum::getDescription($denied_request['classification']) }}</td>
                     <td class="border border-slate-500 text-center">{{ $denied_request['before_status'] }}</td>
                     <td class="border border-slate-500 text-center">{{ $denied_request['after_status'] }}</td>
                     <td class="border border-slate-500 text-center">{{ $denied_request['request_employee'] }}</td>

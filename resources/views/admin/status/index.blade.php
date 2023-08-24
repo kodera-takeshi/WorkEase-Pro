@@ -75,7 +75,7 @@
                     <tr>
                     @endif
                     <td class="border border-slate-500 text-center">{{ $request['id'] }}</td>
-                    <td class="border border-slate-500 px-3">{{ $request['classification'] }}</td>
+                    <td class="border border-slate-500 px-3">{{ \App\Enums\RequestClassificationEnum::getDescription($request['classification']) }}</td>
                     <td class="border border-slate-500 px-3">{{ $request['before_status'] }}</td>
                     <td class="border border-slate-500 px-3">{{ $request['after_status'] }}</td>
                     <td class="border border-slate-500 px-3">{{ $request['status'] }}</td>
