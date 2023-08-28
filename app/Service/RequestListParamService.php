@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Repository\AdminUserRepository;
 use Illuminate\Support\Facades\DB;
 
 class RequestListParamService
@@ -50,14 +51,10 @@ class RequestListParamService
             // todo:申請区分の振り分け
 
             // 申請社員の名前を取得
-            $request_employee_data = DB::table('admins')
-                ->where('id', $request->request_employee_id)
-                ->first();
+            $request_employee_data = AdminUserRepository::get($request->request_employee_id);
             $request_employee = $request_employee_data->name;
             // 変更社員の名前を取得
-            $change_employee_data = DB::table('admins')
-                ->where('id', $request->change_employee_id)
-                ->first();
+            $change_employee_data = AdminUserRepository::get($request->change_employee_id);
             $change_employee = $change_employee_data?->name;
 
             $param = [

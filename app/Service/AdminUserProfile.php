@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Repository\AdminUserRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -15,15 +16,11 @@ class AdminUserProfile
     static function updateImage($image, array $param): string
     {
         // 登録チェック
-        $user_image = DB::table('admins')
-            ->select('img_url')
-            ->where('id', $param['id'])
-            ->where('del_flg', false)
-            ->first();
+        $admin = AdminUserRepository::check($param['id']);
 
         // プロフィール画像が登録済みの場合は、既に登録されているファイルを削除する
-        if ($user_image->img_url !== null) {
-            Storage::delete($user_image->img_url);
+        if ($admin->img_url !== null) {
+            Storage::delete($admin->img_url);
         }
         // 画像の保存と、pathの取得
         $path = $image->store('AdminUserImages', 'local');
