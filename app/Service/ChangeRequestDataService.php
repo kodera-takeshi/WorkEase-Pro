@@ -26,28 +26,13 @@ class ChangeRequestDataService
                 AdminStatusRepository::delete($id);
                 break;
             case 4: // 4 : 社員ステータス追加
-                DB::table('employee_status')->insert([
-                    'name' => $status,
-                    'created_at' => date("Y-m-d H:i:s"),
-                    'updated_at' => date("Y-m-d H:i:s"),
-                    'del_flg' => false
-                ]);
+                AdminStatusRepository::create($status);
                 break;
             case 5: // 5 : 社員ステータス更新
-                DB::table('employee_status')
-                    ->where('id', $id)
-                    ->update([
-                        'name' => $status,
-                        'updated_at' => date("Y-m-d H:i:s")
-                    ]);
+                AdminStatusRepository::update($id, $status);
                 break;
             case 6: // 6 : 社員ステータス削除
-                DB::table('employee_status')
-                    ->where('id', $id)
-                    ->update([
-                        'name' => $status,
-                        'updated_at' => date("Y-m-d H:i:s")
-                    ]);
+                AdminStatusRepository::delete($id);
                 break;
             case 7: // 4 : 役職追加
                 DB::table('managerial_positions')->insert([
