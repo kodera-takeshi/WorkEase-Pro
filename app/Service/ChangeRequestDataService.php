@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Repository\AdminEmployeeStatusRepository;
+use App\Repository\AdminManagerialPositionRepository;
 use App\Repository\AdminStatusRepository;
 use Illuminate\Support\Facades\DB;
 
@@ -36,28 +37,13 @@ class ChangeRequestDataService
                 AdminEmployeeStatusRepository::delete($id);
                 break;
             case 7: // 4 : 役職追加
-                DB::table('managerial_positions')->insert([
-                        'name' => $status,
-                        'created_at' => date("Y-m-d H:i:s"),
-                        'updated_at' => date("Y-m-d H:i:s"),
-                        'del_flg' => false
-                    ]);
+                AdminManagerialPositionRepository::create($status);
                 break;
             case 8: // 5 : 役職更新
-                DB::table('managerial_positions')
-                    ->where('id', $id)
-                    ->update([
-                        'name' => $status,
-                        'updated_at' => date("Y-m-d H:i:s")
-                    ]);
+                AdminManagerialPositionRepository::update($id, $status);
                 break;
             case 9: // 6 : 役職削除
-                DB::table('managerial_positions')
-                    ->where('id', $id)
-                    ->update([
-                        'updated_at' => date("Y-m-d H:i:s"),
-                        'del_flg' => true
-                    ]);
+                AdminManagerialPositionRepository::delete($id);
                 break;
         }
     }
