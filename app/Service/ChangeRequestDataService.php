@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Repository\AdminStatusRepository;
 use Illuminate\Support\Facades\DB;
 
 class ChangeRequestDataService
@@ -16,28 +17,13 @@ class ChangeRequestDataService
     {
         switch ($classification) {
             case 1: // 1 : ステータス追加
-                DB::table('status')->insert([
-                    'name' => $status,
-                    'created_at' => date("Y-m-d H:i:s"),
-                    'updated_at' => date("Y-m-d H:i:s"),
-                    'del_flg' => false
-                ]);
+                AdminStatusRepository::create($status);
                 break;
             case 2: // 2 : ステータス更新
-                DB::table('status')
-                    ->where('id', $id)
-                    ->update([
-                        'name' => $status,
-                        'updated_at' => date("Y-m-d H:i:s")
-                    ]);
+                AdminStatusRepository::update($id, $status);
                 break;
             case 3: // 3 : ステータス削除
-                DB::table('status')
-                    ->where('id', $id)
-                    ->update([
-                        'updated_at' => date("Y-m-d H:i:s"),
-                        'del_flg' => true
-                    ]);
+                AdminStatusRepository::delete($id);
                 break;
             case 4: // 4 : 社員ステータス追加
                 DB::table('employee_status')->insert([
