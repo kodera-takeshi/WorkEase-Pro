@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Repository\AdminEmployeeStatusRepository;
 use App\Repository\AdminStatusRepository;
 use Illuminate\Support\Facades\DB;
 
@@ -26,13 +27,13 @@ class ChangeRequestDataService
                 AdminStatusRepository::delete($id);
                 break;
             case 4: // 4 : 社員ステータス追加
-                AdminStatusRepository::create($status);
+                AdminEmployeeStatusRepository::create($status);
                 break;
             case 5: // 5 : 社員ステータス更新
-                AdminStatusRepository::update($id, $status);
+                AdminEmployeeStatusRepository::update($id, $status);
                 break;
             case 6: // 6 : 社員ステータス削除
-                AdminStatusRepository::delete($id);
+                AdminEmployeeStatusRepository::delete($id);
                 break;
             case 7: // 4 : 役職追加
                 DB::table('managerial_positions')->insert([
