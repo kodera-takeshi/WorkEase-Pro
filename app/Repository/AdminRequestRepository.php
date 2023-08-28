@@ -23,6 +23,21 @@ class AdminRequestRepository
     }
 
     /**
+     * 役職申請データ取得
+     * @param $id
+     * @return void
+     */
+    static function managerialPositionRequest($id)
+    {
+        DB::table('requests')
+            ->where('request_employee_id', $id)
+            ->where('classification', '>=', 7)
+            ->where('classification', '<=', 9)
+            ->get()
+            ->all();
+    }
+
+    /**
      * 新規申請取得
      * @return array
      */
