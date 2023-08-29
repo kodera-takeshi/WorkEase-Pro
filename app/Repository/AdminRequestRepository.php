@@ -61,10 +61,15 @@ class AdminRequestRepository
         return $request;
     }
 
+    /**
+     * 社員ステータス申請取得
+     * @param $id
+     * @return array
+     */
     static function employeeRequest($id)
     {
         $request = DB::table('requests')
-            ->where('request_employee_id', $admin['id'])
+            ->where('request_employee_id', $id)
             ->where('classification', '>=',4)
             ->where('classification', '<=',6)
             ->get()
