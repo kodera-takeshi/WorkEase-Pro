@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Repository\AdminRequestRepository;
+use App\Repository\AdminStatusRepository;
 use App\Service\DeleteService;
 use App\Service\RequestListParamService;
 use Illuminate\Contracts\Foundation\Application;
@@ -22,18 +24,10 @@ class AdminStatusController extends Controller
     {
         $session = $request->session()->all();
         $admin = $session['admin'];
-
-        $status = DB::table('status')
-            ->where('del_flg', false)
-            ->get()
-            ->all();
-
-        $request = DB::table('requests')
-            ->where('request_employee_id', $admin['id'])
-            ->where('classification', '>=', 1)
-            ->where('classification', '<=', 3)
-            ->get()
-            ->all();
+        // 全ステータス取得
+        $status = AdminStatusRepository::all();
+        // ステータス申請
+        $request = AdminRequestRepository::statusRequest($admin['id']);
         $request_list_param = RequestListParamService::makeParam($request);
 
         return view('admin.status.index', [
@@ -48,14 +42,7 @@ class AdminStatusController extends Controller
      */
     public function update(Request $request): RedirectResponse
     {
-        $param = [
-            'name' => $request->name,
-            'updated_at' => date("Y-m-d H:i:s")
-        ];
-
-        DB::table('status')
-            ->where('id', $request->id)
-            ->update($param);
+        AdminStatusRepository::update($request->id, $request->name);
 
         return Redirect::route('admin.status');
     }
@@ -66,14 +53,7 @@ class AdminStatusController extends Controller
      */
     public function create(Request $request)
     {
-        $param = [
-            'name' => $request->name,
-            'created_at' => date("Y-m-d H:i:s"),
-            'updated_at' => date("Y-m-d H:i:s"),
-            'del_flg' => false
-        ];
-
-        DB::table('status')->insert($param);
+        AdminStatusRepository::create($request->name);
 
         return Redirect::route('admin.status');
     }
@@ -87,11 +67,7 @@ class AdminStatusController extends Controller
         $check = DeleteService::check($request->delete);
 
         if ($check) {
-            DB::table('status')
-                ->where('id', $request->id)
-                ->update([
-                    'del_flg' => true
-                ]);
+            AdminStatusRepository::delete($request->id);
             return Redirect::route('admin.status');
         } else {
             return Redirect::route('admin.status');
@@ -102,15 +78,8 @@ class AdminStatusController extends Controller
     {
         $session = $request->session()->all();
         $admin = $session['admin'];
-        $param = [
-            'classification' => 1,
-            'original_id' => null,
-            'before_status' => null,
-            'after_status' => $request->name,
-            'request_employee_id' => $admin['id'],
-            'created_at' => date("Y-m-d H:i:s")
-        ];
-        DB::table('requests')->insert($param);
+
+        AdminRequestRepository::create(1,null, null, $request->name, $admin['id']);
 
         return Redirect::route('admin.status');
     }
@@ -118,23 +87,16 @@ class AdminStatusController extends Controller
     public function updateRequest(Request $request)
     {
         $id = $request->id;
-        $before_status = DB::table('status')
-            ->where('id', $id)
-            ->first();
+
+        $before_status = AdminStatusRepository::get($id);
+
         $original_id = $before_status->id;
         $before_status_name = $before_status->name;
 
         $session = $request->session()->all();
         $admin = $session['admin'];
-        $param = [
-            'classification' => 2,
-            'original_id' => $original_id,
-            'before_status' => $before_status_name,
-            'after_status' => $request->name,
-            'request_employee_id' => $admin['id'],
-            'created_at' => date("Y-m-d H:i:s")
-        ];
-        DB::table('requests')->insert($param);
+
+        AdminRequestRepository::create(2,$original_id, $before_status_name, $request->name, $admin['id']);
 
         return Redirect::route('admin.status');
     }
@@ -142,23 +104,17 @@ class AdminStatusController extends Controller
     public function deleteRequest(Request $request)
     {
         $id = $request->id;
-        $before_status = DB::table('status')
-            ->where('id', $id)
-            ->first();
+        // ステータス取得
+        $before_status = AdminStatusRepository::get($id);
+        // ステータスID取得
         $status_id = $before_status->id;
+        // ステータス名取得
         $before_status_name = $before_status->name;
-
+        // 変更社員ID取得
         $session = $request->session()->all();
         $admin = $session['admin'];
-        $param = [
-            'classification' => 3,
-            'original_id' => $status_id,
-            'before_status' => $before_status_name,
-            'after_status' => $before_status_name,
-            'request_employee_id' => $admin['id'],
-            'created_at' => date("Y-m-d H:i:s")
-        ];
-        DB::table('requests')->insert($param);
+
+        AdminRequestRepository::create(3, $status_id, $before_status_name, $before_status_name, $admin['id']);
 
         return Redirect::route('admin.status');
     }

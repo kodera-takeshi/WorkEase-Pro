@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Repository\AdminManagerialPositionRepository;
+use App\Repository\AdminRequestRepository;
 use App\Service\DeleteService;
 use App\Service\RequestListParamService;
 use Illuminate\Contracts\Foundation\Application;
@@ -21,18 +23,10 @@ class AdminManagerialPositionController extends Controller
     {
         $session = $request->session()->all();
         $admin = $session['admin'];
-
-        $managerial_positions = DB::table('managerial_positions')
-            ->where('del_flg', false)
-            ->get()
-            ->all();
-
-        $request = DB::table('requests')
-            ->where('request_employee_id', $admin['id'])
-            ->where('classification', '>=', 7)
-            ->where('classification', '<=', 9)
-            ->get()
-            ->all();
+        // 役職取得
+        $managerial_positions = AdminManagerialPositionRepository::all();
+        // 役職申請データ取得
+        $request = AdminRequestRepository::managerialPositionRequest($admin['id']);
         $request_list_param = RequestListParamService::makeParam($request);
 
         return view('admin.managerial-position.index', [
@@ -47,14 +41,7 @@ class AdminManagerialPositionController extends Controller
      */
     public function update(Request $request): RedirectResponse
     {
-        $param = [
-            'name' => $request->name,
-            'updated_at' => date("Y-m-d H:i:s")
-        ];
-
-        DB::table('managerial_positions')
-            ->where('id', $request->id)
-            ->update($param);
+        AdminManagerialPositionRepository::update($request->id, $request->name);
 
         return Redirect::route('admin.managerial-position');
     }
@@ -65,14 +52,7 @@ class AdminManagerialPositionController extends Controller
      */
     public function create(Request $request)
     {
-        $param = [
-            'name' => $request->name,
-            'created_at' => date("Y-m-d H:i:s"),
-            'updated_at' => date("Y-m-d H:i:s"),
-            'del_flg' => false
-        ];
-
-        DB::table('managerial_positions')->insert($param);
+        AdminManagerialPositionRepository::create($request->name);
 
         return Redirect::route('admin.managerial-position');
     }
@@ -86,11 +66,7 @@ class AdminManagerialPositionController extends Controller
         $check = DeleteService::check($request->delete);
 
         if ($check) {
-            DB::table('managerial_positions')
-                ->where('id', $request->id)
-                ->update([
-                    'del_flg' => true
-                ]);
+            AdminManagerialPositionRepository::delete($request->id);
             return Redirect::route('admin.managerial-position');
         } else {
             return Redirect::route('admin.managerial-position');
@@ -102,15 +78,7 @@ class AdminManagerialPositionController extends Controller
         $session = $request->session()->all();
         $admin = $session['admin'];
 
-        $param = [
-            'classification' => 7,
-            'original_id' => null,
-            'before_status' => null,
-            'after_status' => $request->name,
-            'request_employee_id' => $admin['id'],
-            'created_at' => date("Y-m-d H:i:s")
-        ];
-        DB::table('requests')->insert($param);
+        AdminManagerialPositionRepository::createRequest($admin['id'], $request->name);
 
         return Redirect::route('admin.managerial-position.update');
     }
@@ -118,23 +86,15 @@ class AdminManagerialPositionController extends Controller
     public function updateRequest(Request $request)
     {
         $id = $request->id;
-        $before_status = DB::table('managerial_positions')
-            ->where('id', $id)
-            ->first();
+
+        $before_status = AdminManagerialPositionRepository::get($id);
+
         $original_id = $before_status->id;
         $before_status_name = $before_status->name;
-
         $session = $request->session()->all();
         $admin = $session['admin'];
-        $param = [
-            'classification' => 8,
-            'original_id' => $original_id,
-            'before_status' => $before_status_name,
-            'after_status' => $request->name,
-            'request_employee_id' => $admin['id'],
-            'created_at' => date("Y-m-d H:i:s")
-        ];
-        DB::table('requests')->insert($param);
+
+        AdminManagerialPositionRepository::updateRequest($original_id, $before_status_name, $request->name, $admin['id']);
 
         return Redirect::route('admin.managerial-position.update');
     }
@@ -142,23 +102,14 @@ class AdminManagerialPositionController extends Controller
     public function deleteRequest(Request $request)
     {
         $id = $request->id;
-        $before_status = DB::table('managerial_positions')
-            ->where('id', $id)
-            ->first();
+        $before_status = AdminManagerialPositionRepository::get($id);
         $original_id = $before_status->id;
         $before_status_name = $before_status->name;
 
         $session = $request->session()->all();
         $admin = $session['admin'];
-        $param = [
-            'classification' => 9,
-            'original_id' => $original_id,
-            'before_status' => $before_status_name,
-            'after_status' => $before_status_name,
-            'request_employee_id' => $admin['id'],
-            'created_at' => date("Y-m-d H:i:s")
-        ];
-        DB::table('requests')->insert($param);
+
+        AdminManagerialPositionRepository::deleteRequest($original_id, $before_status_name, $request->name, $admin['id']);
 
         return Redirect::route('admin.managerial-position.update');
     }
