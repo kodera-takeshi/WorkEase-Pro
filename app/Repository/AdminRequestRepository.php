@@ -22,6 +22,15 @@ class AdminRequestRepository
         return $approval_request;
     }
 
+    /**
+     * 新規申請作成
+     * @param $classification
+     * @param $original_id
+     * @param $before_status
+     * @param $after_status
+     * @param $employee_id
+     * @return void
+     */
     static function create($classification, $original_id, $before_status, $after_status, $employee_id)
     {
         $param = [
@@ -35,6 +44,11 @@ class AdminRequestRepository
         DB::table('requests')->insert($param);
     }
 
+    /**
+     * ステータス申請取得
+     * @param $id
+     * @return array
+     */
     static function statusRequest($id)
     {
         $request = DB::table('requests')
@@ -44,6 +58,17 @@ class AdminRequestRepository
             ->get()
             ->all();
 
+        return $request;
+    }
+
+    static function employeeRequest($id)
+    {
+        $request = DB::table('requests')
+            ->where('request_employee_id', $admin['id'])
+            ->where('classification', '>=',4)
+            ->where('classification', '<=',6)
+            ->get()
+            ->all();
         return $request;
     }
 
