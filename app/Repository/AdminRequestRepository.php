@@ -22,6 +22,31 @@ class AdminRequestRepository
         return $approval_request;
     }
 
+    static function create($classification, $original_id, $before_status, $after_status, $employee_id)
+    {
+        $param = [
+            'classification' => $classification,
+            'original_id' => $original_id,
+            'before_status' => $before_status,
+            'after_status' => $after_status,
+            'request_employee_id' => $employee_id,
+            'created_at' => date("Y-m-d H:i:s")
+        ];
+        DB::table('requests')->insert($param);
+    }
+
+    static function statusRequest($id)
+    {
+        $request = DB::table('requests')
+            ->where('request_employee_id', $id)
+            ->where('classification', '>=', 1)
+            ->where('classification', '<=', 3)
+            ->get()
+            ->all();
+
+        return $request;
+    }
+
     /**
      * 役職申請データ取得
      * @param $id
@@ -29,12 +54,14 @@ class AdminRequestRepository
      */
     static function managerialPositionRequest($id)
     {
-        DB::table('requests')
+        $request = DB::table('requests')
             ->where('request_employee_id', $id)
             ->where('classification', '>=', 7)
             ->where('classification', '<=', 9)
             ->get()
             ->all();
+
+        return $request;
     }
 
     /**
