@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Repository\AdminEmployeeStatusRepository;
+use App\Repository\AdminRequestRepository;
 use App\Service\DeleteService;
 use App\Service\RequestListParamService;
 use Illuminate\Contracts\Foundation\Application;
@@ -21,18 +23,10 @@ class AdminEmployeeStatusController extends Controller
     {
         $session = $request->session()->all();
         $admin = $session['admin'];
-
-        $employee_status = DB::table('employee_status')
-            ->where('del_flg', false)
-            ->get()
-            ->all();
-
-        $request = DB::table('requests')
-            ->where('request_employee_id', $admin['id'])
-            ->where('classification', '>=',4)
-            ->where('classification', '<=',6)
-            ->get()
-            ->all();
+        // 全社員ステータス取得
+        $employee_status = AdminEmployeeStatusRepository::all();
+        // 社員ステータス申請取得
+        $request = AdminRequestRepository::employeeRequest($admin['id']);
         $request_list_param = RequestListParamService::makeParam($request);
 
         return view('admin.employee-status.index', [
@@ -47,14 +41,8 @@ class AdminEmployeeStatusController extends Controller
      */
     public function update(Request $request): RedirectResponse
     {
-        $param = [
-            'name' => $request->name,
-            'updated_at' => date("Y-m-d H:i:s")
-        ];
-
-        DB::table('employee_status')
-            ->where('id', $request->id)
-            ->update($param);
+        //社員ステータス更新
+        AdminEmployeeStatusRepository::update($request->id, $request->name);
 
         // todo:更新処理ステータスのメッセージを追加
         return Redirect::route('admin.employee-status');
@@ -66,14 +54,8 @@ class AdminEmployeeStatusController extends Controller
      */
     public function create(Request $request)
     {
-        $param = [
-            'name' => $request->name,
-            'created_at' => date("Y-m-d H:i:s"),
-            'updated_at' => date("Y-m-d H:i:s"),
-            'del_flg' => false
-        ];
-
-        DB::table('employee_status')->insert($param);
+        // 社員ステータス作成
+        AdminEmployeeStatusRepository::create($request->name);
 
         return Redirect::route('admin.employee-status');
     }
@@ -87,79 +69,67 @@ class AdminEmployeeStatusController extends Controller
         $check = DeleteService::check($request->delete);
 
         if ($check) {
-            DB::table('employee_status')
-                ->where('id', $request->id)
-                ->update([
-                    'del_flg' => true
-                ]);
+            AdminEmployeeStatusRepository::delete($request->id);
             return Redirect::route('admin.employee-status');
         } else {
             return Redirect::route('admin.employee-status');
         }
     }
 
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
     public function request(Request $request)
     {
         $session = $request->session()->all();
         $admin = $session['admin'];
 
-        $param = [
-            'classification' => 4,
-            'original_id' => null,
-            'before_status' => null,
-            'after_status' => $request->name,
-            'request_employee_id' => $admin['id'],
-            'created_at' => date("Y-m-d H:i:s")
-        ];
-        DB::table('requests')->insert($param);
+        AdminRequestRepository::create(4, null, null, $request->name, $admin['id']);
 
         return Redirect::route('admin.employee-status');
     }
 
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
     public function updateRequest(Request $request)
     {
         $id = $request->id;
-        $before_status = DB::table('employee_status')
-            ->where('id', $id)
-            ->first();
+        // 社員ステータス取得
+        $before_status = AdminEmployeeStatusRepository::get($id);
+        // 変更元社員ステータスID取得
         $original_id = $before_status->id;
+        // 変更元ステータス名取得
         $before_status_name = $before_status->name;
-
+        // 変更社員ID
         $session = $request->session()->all();
         $admin = $session['admin'];
-        $param = [
-            'classification' => 5,
-            'original_id' => $original_id,
-            'before_status' => $before_status_name,
-            'after_status' => $request->name,
-            'request_employee_id' => $admin['id'],
-            'created_at' => date("Y-m-d H:i:s")
-        ];
-        DB::table('requests')->insert($param);
+        // 社員ステータス更新申請作成
+        AdminRequestRepository::create(5, $original_id, $before_status_name, $request->name, $admin['id']);
 
         return Redirect::route('admin.employee-status');
     }
 
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
     public function deleteRequest(Request $request)
     {
         $id = $request->id;
-        $before_status = DB::table('employee_status')
-            ->where('id', $id)
-            ->first();
+        // 社員ステータス取得
+        $before_status = AdminEmployeeStatusRepository::get($id);
+        // 変更元社員ステータスID取得
         $original_id = $before_status->id;
+        // 変更元ステータス名取得
         $before_status_name = $before_status->name;
-
+        // 変更社員ID
         $session = $request->session()->all();
         $admin = $session['admin'];
-        $param = [
-            'classification' => 6,
-            'original_id' => $original_id,
-            'before_status' => $before_status_name,
-            'after_status' => $before_status_name,
-            'request_employee_id' => $admin['id'],
-            'created_at' => date("Y-m-d H:i:s")
-        ];
-        DB::table('requests')->insert($param);
+        // 社員ステータス削除申請作成
+        AdminRequestRepository::create(6, $original_id, $before_status_name, $before_status_name, $admin['id']);
 
         return Redirect::route('admin.employee-status');
     }
