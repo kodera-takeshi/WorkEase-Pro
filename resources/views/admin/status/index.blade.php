@@ -52,16 +52,16 @@
         </table>
 
         @if(\Illuminate\Support\Facades\Session::get('admin.role') >= 3)
-            <h2 class="mt-5">TODO:申請ログテーブルの実装</h2>
+            <h2 class="text-2xl font-bold tracking-tight text-gray-900 mt-5">申請ログテーブル</h2>
             <table class="w-full table-fixed border-collapse border border-slate-400">
                 <thead class="w-full">
                 <tr>
-                    <th class="w-1/6 border border-slate-500 bg-slate-300">ID</th>
-                    <th class="w-1/6 border border-slate-500 bg-slate-300 text-left px-3">申請区分</th>
+                    <th class="w-1/6 border border-slate-500 bg-slate-300">申請区分</th>
                     <th class="w-1/6 border border-slate-500 bg-slate-300">変更前ステータス</th>
                     <th class="w-1/6 border border-slate-500 bg-slate-300">変更後ステータス</th>
                     <th class="w-1/6 border border-slate-500 bg-slate-300">ステータス</th>
                     <th class="w-1/6 border border-slate-500 bg-slate-300">変更社員ID</th>
+                    <th class="w-1/6 border border-slate-500 bg-slate-300">キャンセル</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -75,12 +75,12 @@
                     @else
                         <tr>
                             @endif
-                            <td class="border border-slate-500 text-center">@include('admin.components.table_cancel_button', ['id'=>$request['id']])</td>
-                            <td class="border border-slate-500 px-3">{{ \App\Enums\RequestClassificationEnum::getDescription($request['classification']) }}</td>
-                            <td class="border border-slate-500 px-3">{{ $request['before_status'] }}</td>
-                            <td class="border border-slate-500 px-3">{{ $request['after_status'] }}</td>
-                            <td class="border border-slate-500 px-3">{{ $request['status'] }}</td>
-                            <td class="border border-slate-500 px-3">{{ $request['change_employee'] }}</td>
+                            <td class="border border-slate-500 text-center">{{ \App\Enums\RequestClassificationEnum::getDescription($request['classification']) }}</td>
+                            <td class="border border-slate-500 text-center">{{ $request['before_status'] }}</td>
+                            <td class="border border-slate-500 text-center">{{ $request['after_status'] }}</td>
+                            <td class="border border-slate-500 text-center">{{ $request['status'] }}</td>
+                            <td class="border border-slate-500 text-center">{{ $request['change_employee'] }}</td>
+                            <td class="border border-slate-500 text-center">@include('admin.components.table_cancel_button', ['id'=>$request['id'], 'status' => $request['status']])</td>
                         </tr>
                         @endforeach
                 </tbody>
