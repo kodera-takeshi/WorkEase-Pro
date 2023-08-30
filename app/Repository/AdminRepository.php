@@ -9,6 +9,18 @@ use Illuminate\Support\Facades\DB;
 class AdminRepository
 {
     /**
+     * Adminユーザー取得
+     * @param $id
+     * @return Model|Builder|object|null
+     */
+    static function get($id)
+    {
+        $admin = DB::table('admins')
+            ->where('id', $id)
+            ->first();
+        return $admin;
+    }
+    /**
      * アカウント登録
      * @param $name
      * @param $email
@@ -27,6 +39,20 @@ class AdminRepository
         DB::table('admins')->insert($param);
     }
 
+    static function update($id, $name, $email, $image)
+    {
+        $param = [
+            'name' => $name,
+            'email' => $email,
+            'img_url' => $image,
+            'updated_at' => date("Y-m-d H:i:s")
+        ];
+
+        DB::table('admins')
+            ->where('id', $id)
+            ->update($param);
+    }
+
     /**
      * メールアドレスチェック
      * @param $email
@@ -38,6 +64,25 @@ class AdminRepository
             ->where('email', $email)
             ->first();
         return $admin;
+    }
+
+    /**
+     * 詳細条件でアカウント取得
+     * @param $name
+     * @param $email
+     * @param $password
+     * @return Model|Builder|object|null
+     */
+    static function getAccount($name, $email, $password)
+    {
+        $admin_account = DB::table('admins')
+            ->where([
+                'name' => $name,
+                'email' => $email,
+                'password' => $password,
+            ])
+            ->first();
+        return $admin_account;
     }
 
     /**
