@@ -159,6 +159,24 @@ class AdminRequestRepository
             ]);
     }
 
+
+    /**
+     * 申請キャンセル
+     * @param $request_id
+     * @param $admin_id
+     * @return void
+     */
+    static function cansel($request_id, $admin_id)
+    {
+        DB::table('requests')
+            ->where('id', $request_id)
+            ->update([
+                'change_employee_id' => $admin_id,
+                'cancel_flg'=>true,
+                'updated_at' => date("Y-m-d H:i:s")
+            ]);
+    }
+
     /**
      * 否認済み申請取得
      * @return array

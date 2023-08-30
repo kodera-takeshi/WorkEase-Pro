@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Repository\AdminRequestRepository;
 use App\Service\RequestListParamService;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -12,6 +15,9 @@ use App\Service\ChangeRequestDataService;
 
 class AdminRequestController extends Controller
 {
+    /**
+     * @return Application|Factory|View|\Illuminate\Foundation\Application
+     */
     public function index()
     {
         // 新規承認取得
@@ -61,6 +67,21 @@ class AdminRequestController extends Controller
     {
         //申請否認
         AdminRequestRepository::denial($request->id, $request->session()->get('admin.id'));
+
+        return Redirect::route('admin.requests');
+    }
+
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function cansel(Request $request)
+    {
+        //申請キャンセル
+        AdminRequestRepository::cansel($request->id,  $request->session()->get('admin.id'));
+        //申請取得
+        AdminRequestRepository::get($request->id);
+
 
         return Redirect::route('admin.requests');
     }
