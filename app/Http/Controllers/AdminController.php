@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Repository\AdminRepository;
 use App\Service\AdminUserProfile;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -28,9 +29,7 @@ class AdminController extends Controller
     {
         /* メールアドレス判定 */
         $email = $request->email;
-        $admin = DB::table('admins')
-            ->where('email', $email)
-            ->first();
+        $admin = AdminRepository::mailCheck($email);
         if (!$admin) {
             $message = '登録されていないメールアドレスです。';
             return view('admin.authentications.signin', ['message' => $message]);
@@ -45,13 +44,8 @@ class AdminController extends Controller
             return view('admin.authentications.signin', ['message' => $message]);
         }
 
-        /* sessionにログイン情報を登録 */
-        $session_param = [
-            'id' => $admin->id,
-            'name' => $admin->name,
-            'email' => $email
-        ];
-        $request->session()->put('admin', $session_param);
+        // sessionにログイン情報を登録
+        AdminRepository::sessionCreate($request, $admin->id, $admin->name, $email);
 
         return Redirect::route('admin');
     }
@@ -69,31 +63,13 @@ class AdminController extends Controller
         $password = PasswordService::hash($request->password);
 
         // DBにアカウントを登録
-        $param = [
-            'name' => $name,
-            'email' => $email,
-            'password' => $password,
-            'created_at' => date("Y-m-d H:i:s"),
-            'updated_at' => date("Y-m-d H:i:s"),
-        ];
-        $admin = DB::table('admins')->insert($param);
+        $admin = AdminRepository::create($name, $email, $password);
 
         if ($admin) {
-            $admin_account = DB::table('admins')
-                ->where([
-                    'name' => $name,
-                    'email' => $email,
-                    'password' => $password,
-                ])
-                ->first();
+            $admin_account = AdminRepository::getAccount($name, $email, $password);
 
             // sessionにログイン情報を登録
-            $session_param = [
-                'id' => $admin_account['id'],
-                'name' => $name,
-                'email' => $email
-            ];
-            $request->session()->put('admin', $session_param);
+            AdminRepository::sessionCreate($request, $admin_account['id'], $name, $email);
         } else {
             return redirect()->route('admin.authentications.signup');
         }
@@ -117,7 +93,7 @@ class AdminController extends Controller
         ];
         // 更新するレコードを取得
         $admin_db = DB::table('admins')->where('id', $request_param['id']);
-        $admin = $admin_db->first();
+        $admin = AdminRepository::get($request_param['id']);
         // パスワードチェック
         $check = PasswordService::check($request_param['password'], $admin->password);
         if ($check) {
@@ -126,13 +102,7 @@ class AdminController extends Controller
             $image = AdminUserProfile::updateImage($image_data, $request_param);
 
             // データ更新
-            $param = [
-                'name' => $request->name,
-                'email' => $request->email,
-                'img_url' => $image,
-                'updated_at' => date("Y-m-d H:i:s")
-            ];
-            $admin_db->update($param);
+            AdminRepository::update($request_param['id'], $request->name, $request->email, $image);
         }
 
         /*
