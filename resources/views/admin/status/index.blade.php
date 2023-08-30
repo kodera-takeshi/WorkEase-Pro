@@ -82,10 +82,10 @@
                             <td class="border border-slate-500 text-center">{{ $request['change_employee'] }}</td>
                             <td class="border border-slate-500 text-center">@include('admin.components.table_cancel_button', ['id'=>$request['id'], 'status' => $request['status']])</td>
                         </tr>
+                        @include('admin.components.table_cancel_form', ['id'=>$request['id']])
                         @endforeach
                 </tbody>
             </table>
-            <td class="border border-slate-500 text-center">@include('admin.components.table_cancel_form', ['id'=>$request['id']])</td>
         @endif
     </div>
 @endsection
