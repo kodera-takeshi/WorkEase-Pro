@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\AdminRoleEnum;
 use App\Repository\AdminRepository;
 use App\Repository\AdminRoleRepository;
 use App\Service\AdminListService;
@@ -33,6 +34,12 @@ class AdminListController extends Controller
      */
     public function update(Request $request)
     {
+        /* 変更するユーザーの権限がMasterであり、それ以外のユーザーにMasterが存在しない場合は、更新せずリダイレクトさせる */
+        $master_admin = AdminRepository::masterGet($request->id);
+        if ($request->role_id == AdminRoleEnum::MASTER && empty($master_admin)) {
+            return Redirect::route('admin.list');
+        }
+        // 更新処理
         AdminRepository::roleUpdate($request->id, $request->role_id);
 
         return Redirect::route('admin.list');

@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Enums\AdminRoleEnum;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
@@ -34,6 +35,20 @@ class AdminRepository
             ->first();
         return $admin;
     }
+
+    /**
+     * @return void
+     */
+    static function masterGet($id)
+    {
+        $admin = DB::table('admins')
+            ->where('id','!=', $id)
+            ->where('admin_role_id', AdminRoleEnum::MASTER)
+            ->get()
+            ->all();
+        return $admin;
+    }
+
     /**
      * アカウント登録
      * @param $name
