@@ -29,9 +29,12 @@
                 <td class="border border-slate-500 text-center">{{ $admin['id'] }}</td>
                 <td class="border border-slate-500 text-center">{{ $admin['name'] }}</td>
                 <td class="border border-slate-500 text-center">{{ $admin['role'] }}</td>
-                <td class="border border-slate-500 text-center">更新ボタン</td>
+                <td class="border border-slate-500 text-center">
+                    @include('admin.components.admin_list_update_button', ['id'=>$admin['id']])
+                </td>
                 <td class="border border-slate-500 text-center">削除ボタン</td>
             </tr>
+                @include('admin.components.admin_list_update_form', ['id'=>$admin['id'], 'role'=>$admin['role_id'], 'admin_roles'=>$admin_roles])
         @endforeach
         </tbody>
     </table>
