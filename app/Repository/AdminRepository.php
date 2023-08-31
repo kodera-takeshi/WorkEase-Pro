@@ -75,6 +75,12 @@ class AdminRepository
             ->update($param);
     }
 
+    /**
+     * 権限更新
+     * @param $id
+     * @param $role_id
+     * @return void
+     */
     static function roleUpdate($id, $role_id)
     {
         $param = [
