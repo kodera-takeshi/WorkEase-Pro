@@ -34,6 +34,7 @@ Route::group(['middleware' => ['admin']], function () {
         Route::get('/', [AdminController::class, 'index'])->name('admin');
         // admin_list
         Route::get('/list', [AdminListController::class, 'index'])->name('admin.list');
+        Route::post('/list/update', [AdminListController::class, 'update'])->name('admin.list.update');
         // companies
         Route::get('/company',[AdminCompanyController::class, 'index'])->name('admin.company');
         // status

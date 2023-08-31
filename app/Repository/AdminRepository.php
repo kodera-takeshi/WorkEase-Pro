@@ -53,6 +53,14 @@ class AdminRepository
         return DB::table('admins')->insert($param);
     }
 
+    /**
+     * Adminユーザー更新
+     * @param $id
+     * @param $name
+     * @param $email
+     * @param $image
+     * @return void
+     */
     static function update($id, $name, $email, $image)
     {
         $param = [
@@ -62,6 +70,17 @@ class AdminRepository
             'updated_at' => date("Y-m-d H:i:s")
         ];
 
+        DB::table('admins')
+            ->where('id', $id)
+            ->update($param);
+    }
+
+    static function roleUpdate($id, $role_id)
+    {
+        $param = [
+            'admin_role_id'=>$role_id,
+            'updated_at'=>date("Y-m-d H:i:s")
+        ];
         DB::table('admins')
             ->where('id', $id)
             ->update($param);

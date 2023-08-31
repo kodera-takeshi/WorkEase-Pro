@@ -3,7 +3,7 @@
         <a href="" class="block w-full h-full cursor-default"></a>
         <div class="w-2/5 mx-auto mt-20 relative -top-full bg-white p-5 rounded-lg">
             <h2 class="font-bold">ユーザー権限の更新</h2>
-            <form action="{{ route('admin.employee-status.update-request') }}" method="POST">
+            <form action="{{ route('admin.list.update') }}" method="POST">
                 @csrf
                 <label for="id-{{ $id }}" class="block text-sm font-semibold leading-6 text-gray-900">ID</label>
                 <input
