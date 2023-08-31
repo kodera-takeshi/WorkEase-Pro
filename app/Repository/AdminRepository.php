@@ -9,6 +9,20 @@ use Illuminate\Support\Facades\DB;
 class AdminRepository
 {
     /**
+     * Adminユーザー全取得
+     * @return array
+     */
+    static function all()
+    {
+        $admin = DB::table('admins')
+            ->where('del_flg', false)
+            ->get()
+            ->all();
+
+        return $admin;
+    }
+
+    /**
      * Adminユーザー取得
      * @param $id
      * @return Model|Builder|object|null
