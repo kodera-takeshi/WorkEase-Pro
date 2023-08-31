@@ -78,7 +78,7 @@ class AdminManagerialPositionController extends Controller
         $session = $request->session()->all();
         $admin = $session['admin'];
 
-        AdminManagerialPositionRepository::createRequest($admin['id'], $request->name);
+        AdminRequestRepository::create(7, null, null, $request->name, $admin['id']);
 
         return Redirect::route('admin.managerial-position.update');
     }
@@ -94,7 +94,7 @@ class AdminManagerialPositionController extends Controller
         $session = $request->session()->all();
         $admin = $session['admin'];
 
-        AdminManagerialPositionRepository::updateRequest($original_id, $before_status_name, $request->name, $admin['id']);
+        AdminRequestRepository::create(8, $original_id, $before_status_name, $request->name, $admin['id']);
 
         return Redirect::route('admin.managerial-position.update');
     }
@@ -109,7 +109,7 @@ class AdminManagerialPositionController extends Controller
         $session = $request->session()->all();
         $admin = $session['admin'];
 
-        AdminManagerialPositionRepository::deleteRequest($original_id, $before_status_name, $request->name, $admin['id']);
+        AdminRequestRepository::create(9, $original_id, $before_status_name, $before_status_name, $admin['id']);
 
         return Redirect::route('admin.managerial-position.update');
     }
