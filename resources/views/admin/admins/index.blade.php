@@ -16,14 +16,23 @@
         </tr>
         </thead>
         <tbody>
-{{--        @foreach($status as $item)--}}
-            <tr>
-                <td class="border border-slate-500 text-center">1</td>
-                <td class="border border-slate-500 text-center">小寺剛史</td>
-                <td class="border border-slate-500 text-center">Officer</td>
+        @foreach($admins as $admin)
+            @if($admin['role_id'] == \App\Enums\AdminRoleEnum::MASTER)
+                <tr class="bg-cyan-200">
+            @elseif($admin['role_id'] == \App\Enums\AdminRoleEnum::OFFICER)
+                <tr class="bg-cyan-100">
+            @elseif($admin['role_id'] == \App\Enums\AdminRoleEnum::MANAGER)
+                <tr class="bg-cyan-50">
+            @else
+                <tr>
+            @endif
+                <td class="border border-slate-500 text-center">{{ $admin['id'] }}</td>
+                <td class="border border-slate-500 text-center">{{ $admin['name'] }}</td>
+                <td class="border border-slate-500 text-center">{{ $admin['role'] }}</td>
                 <td class="border border-slate-500 text-center">更新ボタン</td>
                 <td class="border border-slate-500 text-center">削除ボタン</td>
-{{--        @endforeach--}}
+            </tr>
+        @endforeach
         </tbody>
     </table>
 @endsection
