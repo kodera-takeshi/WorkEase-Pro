@@ -35,8 +35,9 @@ class AdminListController extends Controller
     public function update(Request $request)
     {
         /* 変更するユーザーの権限がMasterであり、それ以外のユーザーにMasterが存在しない場合は、更新せずリダイレクトさせる */
+        $admin = AdminRepository::get($request->id);
         $master_admin = AdminRepository::masterGet($request->id);
-        if ($request->role_id == AdminRoleEnum::MASTER && empty($master_admin)) {
+        if ($admin->admin_role_id == AdminRoleEnum::MASTER && empty($master_admin)) {
             return Redirect::route('admin.list');
         }
         // 更新処理
