@@ -36,7 +36,7 @@ class AdminRepository
             'created_at' => date("Y-m-d H:i:s"),
             'updated_at' => date("Y-m-d H:i:s"),
         ];
-        DB::table('admins')->insert($param);
+        return DB::table('admins')->insert($param);
     }
 
     static function update($id, $name, $email, $image)
