@@ -8,10 +8,11 @@ class AdminManagerialPositionRepository
 {
     static function all()
     {
-        DB::table('managerial_positions')
+        $managerial_positions = DB::table('managerial_positions')
             ->where('del_flg', false)
             ->get()
             ->all();
+        return $managerial_positions;
     }
 
     static function get($id)
@@ -53,50 +54,4 @@ class AdminManagerialPositionRepository
             ]);
     }
 
-    static function createRequest($id, $name)
-    {
-        $param = [
-            'classification' => 7,
-            'original_id' => null,
-            'before_status' => null,
-            'after_status' => $name,
-            'request_employee_id' => $id,
-            'created_at' => date("Y-m-d H:i:s")
-        ];
-
-        Self::request($param);
-    }
-
-    static function updateRequest($original_id, $before_status_name, $name, $id)
-    {
-        $param = [
-            'classification' => 8,
-            'original_id' => $original_id,
-            'before_status' => $before_status_name,
-            'after_status' => $name,
-            'request_employee_id' => $id,
-            'created_at' => date("Y-m-d H:i:s")
-        ];
-
-        Self::request($param);
-    }
-
-    static function deleteRequest($original_id, $before_status_name, $name, $id)
-    {
-        $param = [
-            'classification' => 9,
-            'original_id' => $original_id,
-            'before_status' => $before_status_name,
-            'after_status' => $name,
-            'request_employee_id' => $id,
-            'created_at' => date("Y-m-d H:i:s")
-        ];
-
-        Self::request($param);
-    }
-
-    private function request($param)
-    {
-        DB::table('requests')->insert($param);
-    }
 }
