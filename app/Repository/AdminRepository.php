@@ -2,12 +2,27 @@
 
 namespace App\Repository;
 
+use App\Enums\AdminRoleEnum;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 
 class AdminRepository
 {
+    /**
+     * Adminユーザー全取得
+     * @return array
+     */
+    static function all()
+    {
+        $admin = DB::table('admins')
+            ->where('del_flg', false)
+            ->get()
+            ->all();
+
+        return $admin;
+    }
+
     /**
      * Adminユーザー取得
      * @param $id
@@ -20,6 +35,20 @@ class AdminRepository
             ->first();
         return $admin;
     }
+
+    /**
+     * @return void
+     */
+    static function masterGet($id)
+    {
+        $admin = DB::table('admins')
+            ->where('id','!=', $id)
+            ->where('admin_role_id', AdminRoleEnum::MASTER)
+            ->get()
+            ->all();
+        return $admin;
+    }
+
     /**
      * アカウント登録
      * @param $name
@@ -39,6 +68,14 @@ class AdminRepository
         return DB::table('admins')->insert($param);
     }
 
+    /**
+     * Adminユーザー更新
+     * @param $id
+     * @param $name
+     * @param $email
+     * @param $image
+     * @return void
+     */
     static function update($id, $name, $email, $image)
     {
         $param = [
@@ -48,6 +85,23 @@ class AdminRepository
             'updated_at' => date("Y-m-d H:i:s")
         ];
 
+        DB::table('admins')
+            ->where('id', $id)
+            ->update($param);
+    }
+
+    /**
+     * 権限更新
+     * @param $id
+     * @param $role_id
+     * @return void
+     */
+    static function roleUpdate($id, $role_id)
+    {
+        $param = [
+            'admin_role_id'=>$role_id,
+            'updated_at'=>date("Y-m-d H:i:s")
+        ];
         DB::table('admins')
             ->where('id', $id)
             ->update($param);

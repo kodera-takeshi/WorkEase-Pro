@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminStatusController;
 use App\Http\Controllers\AdminEmployeeStatusController;
 use App\Http\Controllers\AdminManagerialPositionController;
 use App\Http\Controllers\AdminRequestController;
+use App\Http\Controllers\AdminListController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +30,11 @@ Route::group(['middleware' => ['adminAuthentication']], function () {
 
 Route::group(['middleware' => ['admin']], function () {
     Route::prefix('admin')->group(function() {
+        // home
         Route::get('/', [AdminController::class, 'index'])->name('admin');
+        // admin_list
+        Route::get('/list', [AdminListController::class, 'index'])->name('admin.list');
+        Route::post('/list/update', [AdminListController::class, 'update'])->name('admin.list.update');
         // companies
         Route::get('/company',[AdminCompanyController::class, 'index'])->name('admin.company');
         // status
