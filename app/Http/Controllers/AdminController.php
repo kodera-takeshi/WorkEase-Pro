@@ -67,9 +67,8 @@ class AdminController extends Controller
 
         if ($admin) {
             $admin_account = AdminRepository::getAccount($name, $email, $password);
-
             // sessionにログイン情報を登録
-            AdminRepository::sessionCreate($request, $admin_account['id'], $name, $email);
+            AdminRepository::sessionCreate($request, $admin_account->id, $name, $email);
         } else {
             return redirect()->route('admin.authentications.signup');
         }
