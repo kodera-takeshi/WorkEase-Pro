@@ -6,6 +6,7 @@ use App\Enums\AdminRoleEnum;
 use App\Repository\AdminRepository;
 use App\Repository\AdminRoleRepository;
 use App\Service\AdminListService;
+use App\Service\DeleteService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -35,9 +36,35 @@ class AdminListController extends Controller
     public function update(Request $request)
     {
         /* 変更するユーザーの権限がMasterであり、それ以外のユーザーにMasterが存在しない場合は、更新せずリダイレクトさせる */
-        $this->stop($request->id);
+        $stop = $this->stop($request->id);
         // 更新処理
-        AdminRepository::roleUpdate($request->id, $request->role_id);
+        if ($stop) {
+            AdminRepository::roleUpdate($request->id, $request->role_id);
+        } else {
+            return Redirect::route('admin.list');
+        }
+
+        return Redirect::route('admin.list');
+    }
+
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function delete(Request $request)
+    {
+        // 削除の入力チェック
+        if (!DeleteService::check($request->delete)) {
+            return Redirect::route('admin.list');
+        }
+        // 変更するユーザーの権限がMasterであり、それ以外のユーザーにMasterが存在しない場合は、削除せずリダイレクトさせる
+        $stop = $this->stop($request->id);
+        // ユーザー削除
+        if ($stop) {
+            AdminRepository::delete($request->id);
+        } else {
+            return Redirect::route('admin.list');
+        }
 
         return Redirect::route('admin.list');
     }
@@ -47,7 +74,8 @@ class AdminListController extends Controller
         $admin = AdminRepository::get($request_id);
         $master_admin = AdminRepository::masterGet($request_id);
         if ($admin->admin_role_id == AdminRoleEnum::MASTER && empty($master_admin)) {
-            return Redirect::route('admin.list');
+            return false;
         }
+        return true;
     }
 }

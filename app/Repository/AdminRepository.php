@@ -91,6 +91,21 @@ class AdminRepository
     }
 
     /**
+     * Adminユーザー削除
+     * @param $id
+     * @return void
+     */
+    static function delete($id)
+    {
+        DB::table('admins')
+            ->where('id', $id)
+            ->update([
+                'del_flg' => 1,
+                'updated_at' => date("Y-m-d H:i:s")
+            ]);
+    }
+
+    /**
      * 権限更新
      * @param $id
      * @param $role_id

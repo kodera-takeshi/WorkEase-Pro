@@ -35,6 +35,7 @@ Route::group(['middleware' => ['admin']], function () {
         // admin_list
         Route::get('/list', [AdminListController::class, 'index'])->name('admin.list');
         Route::post('/list/update', [AdminListController::class, 'update'])->name('admin.list.update');
+        Route::post('/list/delete', [AdminListController::class, 'delete'])->name('admin.list.delete');
         // companies
         Route::get('/company',[AdminCompanyController::class, 'index'])->name('admin.company');
         // status
