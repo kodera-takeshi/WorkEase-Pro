@@ -32,9 +32,12 @@
                 <td class="border border-slate-500 text-center">
                     @include('admin.components.admin_list_update_button', ['id'=>$admin['id']])
                 </td>
-                <td class="border border-slate-500 text-center">削除ボタン</td>
+                <td class="border border-slate-500 text-center">
+                    @include('admin.components.admin_list_delete_button', ['id'=>$admin['id']])
+                </td>
             </tr>
                 @include('admin.components.admin_list_update_form', ['id'=>$admin['id'], 'role'=>$admin['role_id'], 'admin_roles'=>$admin_roles])
+                @include('admin.components.admin_list_delete_form', ['id'=>$admin['id'], 'name'=>$admin['name']])
         @endforeach
         </tbody>
     </table>
