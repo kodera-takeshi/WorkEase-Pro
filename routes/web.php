@@ -85,5 +85,5 @@ Route::group(['middleware' => ['admin']], function () {
 | 利用者が利用するルーティングです。
 */
 Route::get('/', function () {
-    return view('welcome');
+    return view('user.template');
 })->name('home');
