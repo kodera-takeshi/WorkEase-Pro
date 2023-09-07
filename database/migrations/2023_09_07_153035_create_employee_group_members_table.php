@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('employee_groups', function (Blueprint $table) {
+        Schema::create('employee_group_members', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->comment('グループ名');
-            $table->unsignedBigInteger('company_id')->comment('利用企業ID')->nullable()->default(null);
+            $table->unsignedBigInteger('employee_group_id')->comment('社員グループID');
+            $table->unsignedBigInteger('employee_id')->comment('社員ID');
             $table->timestamps();
             $table->boolean('del_flg')->comment('削除フラグ')->default(false);
         });
