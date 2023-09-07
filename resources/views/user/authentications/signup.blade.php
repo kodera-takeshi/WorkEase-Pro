@@ -54,6 +54,7 @@
                     <label for="toggle" class="toggle_label"/>
                 </div>
             </div>
+            <!-- todo:スイッチがon/offで表示を切り替える -->
             <div class="sm:col-span-2">
                 <label for="office" class="block text-sm font-semibold leading-6 text-gray-900">オフィス名</label>
                 <div>
