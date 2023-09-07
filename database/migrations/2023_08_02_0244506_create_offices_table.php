@@ -14,11 +14,11 @@ return new class extends Migration
         /* 従業員テーブル */
         Schema::create('offices', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('company_id')->comment('企業ID');
             $table->string('name')->comment('オフィス名');
-            $table->string('phone_number')->comment('電話番号');
-            $table->string('postal_code')->comment('郵便番号');
-            $table->string('address')->comment('住所');
-            $table->unsignedBigInteger('company_id')->comment('管理者権限ID');
+            $table->string('phone_number')->comment('電話番号')->nullable();
+            $table->string('postal_code')->comment('郵便番号')->nullable();
+            $table->string('address')->comment('住所')->nullable();
             $table->timestamps();
             $table->boolean('del_flg')->default(false)->comment('削除フラグ');
         });

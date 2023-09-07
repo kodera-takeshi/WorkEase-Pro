@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminEmployeeStatusController;
 use App\Http\Controllers\AdminManagerialPositionController;
 use App\Http\Controllers\AdminRequestController;
 use App\Http\Controllers\AdminListController;
+use App\Http\Controllers\UserCertificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,3 +88,7 @@ Route::group(['middleware' => ['admin']], function () {
 Route::get('/', function () {
     return view('user.template');
 })->name('home');
+
+
+Route::get('/signup', [UserCertificationController::class, 'signup'])->name('signup');
+Route::post('/create', [UserCertificationController::class, 'create'])->name('signup.create');

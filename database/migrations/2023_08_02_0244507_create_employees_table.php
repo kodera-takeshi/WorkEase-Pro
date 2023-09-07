@@ -18,8 +18,9 @@ return new class extends Migration
             $table->string('email')->comment('メールアドレス')->unique();
             $table->string('password')->comment('パスワード');
             $table->string('birthday')->comment('誕生日')->nullable();
-            $table->unsignedBigInteger('office_id')->comment('所属オフィスID');
-            $table->unsignedBigInteger('managerial_position_id')->comment('役職ID');
+            $table->unsignedBigInteger('company_id')->comment('所属企業ID');
+            $table->unsignedBigInteger('office_id')->comment('所属オフィスID')->nullable();
+            $table->unsignedBigInteger('managerial_position_id')->comment('役職ID')->nullable();
             $table->unsignedBigInteger('employee_status_id')->comment('社員ステータスID');
             $table->timestamps();
             $table->boolean('del_flg')->default(false)->comment('削除フラグ');
