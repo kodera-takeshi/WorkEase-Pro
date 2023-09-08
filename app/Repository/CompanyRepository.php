@@ -12,9 +12,10 @@ class CompanyRepository
      * @param string $name
      * @return array
      */
-    static function create(string $name)
+    static function create(int $company_code, string $name)
     {
         $param = [
+            'company_code' => $company_code,
             'name' => $name,
             'created_at' => date("Y-m-d H:i:s"),
             'updated_at' => date("Y-m-d H:i:s"),
@@ -36,5 +37,14 @@ class CompanyRepository
             ->where('created_at', $param['created_at'])
             ->first();
         return $company;
+    }
+
+    /**
+     * @return int
+     */
+    static function count()
+    {
+        $recordCount = DB::table('companies')->count();
+        return $recordCount;
     }
 }
