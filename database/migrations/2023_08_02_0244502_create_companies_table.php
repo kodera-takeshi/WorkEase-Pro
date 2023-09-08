@@ -14,6 +14,7 @@ return new class extends Migration
         /* 企業テーブル */
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('company_code')->comment('企業コード');
             $table->string('name')->comment('企業名');
             $table->timestamps();
             $table->boolean('del_flg')->default(false)->comment('削除フラグ');

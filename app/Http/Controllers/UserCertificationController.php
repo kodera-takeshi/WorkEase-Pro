@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Redirect;
 
 class UserCertificationController extends Controller
 {
+    const COMPANY_CODE = 5400;
+
     public function signup()
     {
         return view('user.authentications.signup');
@@ -21,7 +23,9 @@ class UserCertificationController extends Controller
     public function create(Request $request)
     {
         /* 企業登録・取得 */
-        $company = CompanyRepository::create($request->company);
+        $recordCount = CompanyRepository::count();
+        $company_code = self::COMPANY_CODE + $recordCount;
+        $company = CompanyRepository::create($company_code, $request->company);
         $company = CompanyRepository::advancedSearch($company);
         $company_id = $company->id;
         /* オフィス追加 */
