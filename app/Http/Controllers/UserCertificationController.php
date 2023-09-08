@@ -9,6 +9,7 @@ use App\Repository\CompanyRepository;
 use App\Repository\OfficeRepository;
 use App\Service\EmployeeService;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 
 class UserCertificationController extends Controller
 {
@@ -40,5 +41,36 @@ class UserCertificationController extends Controller
         dd($request->session()->get('user'));
 
         // todo:ホーム画面に遷移させる
+    }
+
+    public function signin()
+    {
+        $message = null;
+        return view('user.authentications.signin', ['message' => $message]);
+    }
+
+    public function check(Request $request)
+    {
+        /* メールアドレス判定 */
+        $employee = EmployeeRepository::mailCheck($request->email);
+        if (!$employee) {
+            $message = '登録されていないメールアドレスです。';
+            return view('user.authentications.signin', ['message' => $message]);
+        }
+
+        /* パスワード判定 */
+        $password = $request->password; // 入力されたパスワード
+        $hash_password = $employee->password; // 設定したパスワード取得
+        $password_check = PasswordService::check($password, $hash_password);
+        if (!$password_check) {
+            $message = 'パスワードが違います。';
+            return view('user.authentications.signin', ['message' => $message]);
+        }
+
+        /* sessionにログイン情報を登録 */
+        EmployeeService::session($request, $employee);
+
+        return Redirect::route('home');
+
     }
 }

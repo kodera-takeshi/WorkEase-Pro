@@ -4,6 +4,14 @@ namespace App\Service;
 
 class EmployeeService
 {
+    /**
+     * @param $name
+     * @param $email
+     * @param $password
+     * @param $company_id
+     * @param $office_id
+     * @return array
+     */
     static function signupEmployeeRecord($name, $email, $password, $company_id, $office_id)
     {
         return [
@@ -21,6 +29,11 @@ class EmployeeService
         ];
     }
 
+    /**
+     * @param $request
+     * @param $employee
+     * @return void
+     */
     static function session($request, $employee)
     {
         $session_param = [

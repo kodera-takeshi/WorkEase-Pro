@@ -22,11 +22,24 @@ class EmployeeRepository
      */
     static function advancedSearch($param)
     {
-        $company = DB::table('employees')
+        $employee = DB::table('employees')
             ->where('company_id', $param['company_id'])
             ->where('office_id', $param['office_id'])
             ->where('name', $param['name'])
             ->first();
-        return $company;
+        return $employee;
+    }
+
+    /**
+     * メールアドレスチェック
+     * @param $email
+     * @return Model|Builder|object|null
+     */
+    static function mailCheck($email)
+    {
+        $employee = DB::table('employees')
+            ->where('email', $email)
+            ->first();
+        return $employee;
     }
 }
