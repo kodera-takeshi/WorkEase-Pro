@@ -272,5 +272,27 @@
     signOutBtn.addEventListener('click', ()=> {
         changeElement(userMenu)
     }, false);
+
+    /* プロフィールメニュー表示の切り替え処理 */
+    //ボタン要素を取得
+    let addOfficeBtn = document.getElementById('toggle');
+    //表示・非表示を切り替える要素を取得
+    let addOffice = document.getElementById('office_form');
+    console.log(addOfficeBtn);
+    console.log(addOffice);
+    // 初期画面表示は非表示の状態にする
+    addOffice.style.display = 'none';
+    //styleのdisplayを変更する関数
+    let changeElement = (el)=> {
+        if(el.style.display==''){
+            el.style.display='none';
+        }else{
+            el.style.display='';
+        }
+    }
+    //上記関数をボタンクリック時に実行
+    addOfficeBtn.addEventListener('click', ()=> {
+        changeElement(addOffice);
+    }, false);
 </script>
 </html>

@@ -6,7 +6,7 @@
     <!--
     Base:Tailwind Components 【ContactSections】
     https://tailwindui.com/components/marketing/sections/contact-sections
--->
+    -->
     <div class="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
         <div class="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]"
              aria-hidden="true">
@@ -55,7 +55,7 @@
                 </div>
             </div>
             <!-- todo:スイッチがon/offで表示を切り替える -->
-            <div class="sm:col-span-2">
+            <div id="office_form" class="sm:col-span-2">
                 <label for="office" class="block text-sm font-semibold leading-6 text-gray-900">オフィス名</label>
                 <div>
                     <input
@@ -117,4 +117,27 @@
             </div>
         </form>
     </div>
+    <script>
+        /* オフィス登録フォーム表示の切り替え処理 */
+        //スイッチ要素を取得
+        let addOfficeBtn = document.getElementById('toggle');
+        //表示・非表示を切り替える要素を取得
+        let addOffice = document.getElementById('office_form');
+        console.log(addOfficeBtn);
+        console.log(addOffice);
+        // 初期画面表示は非表示の状態にする
+        addOffice.style.display = 'none';
+        //styleのdisplayを変更する関数
+        let changeElement = (el)=> {
+            if(el.style.display==''){
+                el.style.display='none';
+            }else{
+                el.style.display='';
+            }
+        }
+        //上記関数をボタンクリック時に実行
+        addOfficeBtn.addEventListener('click', ()=> {
+            changeElement(addOffice);
+        }, false);
+    </script>
 @endsection
