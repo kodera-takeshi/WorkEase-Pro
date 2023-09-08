@@ -92,3 +92,5 @@ Route::get('/', function () {
 
 Route::get('/signup', [UserCertificationController::class, 'signup'])->name('signup');
 Route::post('/create', [UserCertificationController::class, 'create'])->name('signup.create');
+Route::get('/signin', [UserCertificationController::class, 'signin'])->name('signin');
+Route::post('/signin', [UserCertificationController::class, 'check'])->name('signin.check');
