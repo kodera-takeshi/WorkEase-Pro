@@ -1,6 +1,6 @@
 @extends('user.authentications.template')
 
-@section('title', 'Sign In')
+@section('title', 'Sign Up')
 
 @section('body')
     <!--
