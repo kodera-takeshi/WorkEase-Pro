@@ -52,6 +52,6 @@ class CompanyRepository
     {
         return DB::table('companies')
             ->where('company_code', $companyCode)
-            ->get();
+            ->first();
     }
 }

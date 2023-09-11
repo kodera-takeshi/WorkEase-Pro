@@ -65,7 +65,4 @@
         margin: auto;
     }
 </style>
-<script>
-
-</script>
 </html>

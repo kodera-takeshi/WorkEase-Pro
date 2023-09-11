@@ -83,4 +83,14 @@ class UserCertificationController extends Controller
         $message = null;
         return view('user.authentications.join', compact('message'));
     }
+
+    public function joinCreate(Request $request)
+    {
+        dd([
+            $request->company,
+            $request->name,
+            $request->email,
+            $request->password,
+        ]);
+    }
 }

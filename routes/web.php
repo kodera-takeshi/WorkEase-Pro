@@ -95,3 +95,4 @@ Route::post('/create', [UserCertificationController::class, 'create'])->name('si
 Route::get('/signin', [UserCertificationController::class, 'signin'])->name('signin');
 Route::post('/signin', [UserCertificationController::class, 'check'])->name('signin.check');
 Route::get('/join', [UserCertificationController::class, 'join'])->name('join');
+Route::post('/join', [UserCertificationController::class, 'joinCreate'])->name('join.create');
