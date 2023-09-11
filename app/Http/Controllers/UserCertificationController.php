@@ -86,11 +86,14 @@ class UserCertificationController extends Controller
 
     public function joinCreate(Request $request)
     {
-        dd([
-            $request->company,
-            $request->name,
-            $request->email,
-            $request->password,
-        ]);
+        // 企業を取得
+        $company = CompanyRepository::fetch($request->company);
+        /* 社員登録 */
+        $employee = EmployeeService::signupEmployeeRecord($request->name, $request->email, $request->password, $company->id, null);
+        EmployeeRepository::create($employee);
+        /* Session登録 */
+        $employee = EmployeeRepository::advancedSearch($employee);
+        EmployeeService::session($request, $employee);
+        /* todo:ホーム画面に遷移させる */
     }
 }
