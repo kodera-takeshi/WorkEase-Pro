@@ -37,7 +37,7 @@ class UserCertificationController extends Controller
             $office_id =null;
         }
         /* ユーザー追加 */
-        $employee = EmployeeService::signupEmployeeRecord($request->name, $request->email, $request->password, $company_id, $office_id);
+        $employee = EmployeeService::makeEmployeeRecord($request->name, $request->email, $request->password, $company_id, $office_id);
         EmployeeRepository::create($employee);
         /* Session登録 */
         $employee = EmployeeRepository::advancedSearch($employee);
@@ -89,7 +89,7 @@ class UserCertificationController extends Controller
         // 企業を取得
         $company = CompanyRepository::fetch($request->company);
         /* 社員登録 */
-        $employee = EmployeeService::signupEmployeeRecord($request->name, $request->email, $request->password, $company->id, null);
+        $employee = EmployeeService::makeEmployeeRecord($request->name, $request->email, $request->password, $company->id, null);
         EmployeeRepository::create($employee);
         /* Session登録 */
         $employee = EmployeeRepository::advancedSearch($employee);

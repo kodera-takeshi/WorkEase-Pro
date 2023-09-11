@@ -12,7 +12,7 @@ class EmployeeService
      * @param $office_id
      * @return array
      */
-    static function signupEmployeeRecord($name, $email, $password, $company_id, $office_id)
+    static function makeEmployeeRecord($name, $email, $password, $company_id, $office_id)
     {
         return [
             'name' => $name,
