@@ -47,4 +47,11 @@ class CompanyRepository
         $recordCount = DB::table('companies')->count();
         return $recordCount;
     }
+
+    static function fetch($companyCode)
+    {
+        return DB::table('companies')
+            ->where('company_code', $companyCode)
+            ->first();
+    }
 }

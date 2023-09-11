@@ -77,4 +77,23 @@ class UserCertificationController extends Controller
         return Redirect::route('home');
 
     }
+
+    public function join()
+    {
+        $message = null;
+        return view('user.authentications.join', compact('message'));
+    }
+
+    public function joinCreate(Request $request)
+    {
+        // 企業を取得
+        $company = CompanyRepository::fetch($request->company);
+        /* 社員登録 */
+        $employee = EmployeeService::signupEmployeeRecord($request->name, $request->email, $request->password, $company->id, null);
+        EmployeeRepository::create($employee);
+        /* Session登録 */
+        $employee = EmployeeRepository::advancedSearch($employee);
+        EmployeeService::session($request, $employee);
+        /* todo:ホーム画面に遷移させる */
+    }
 }

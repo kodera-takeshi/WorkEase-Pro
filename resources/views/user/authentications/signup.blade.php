@@ -21,7 +21,12 @@
             <p class="mt-2 text-lg leading-8 text-gray-600">利用を開始するためにアカウントを作成し、ログインします。</p>
             <p class="mt-2 text-lg leading-8 text-gray-600">
                 既にアカウントをお持ちの方は、
-                <a class="text-blue-600 underline decoration-blue-600" href="＃">サインイン</a>
+                <a class="text-blue-600 underline decoration-blue-600" href="{{ route('signin') }}">サインイン</a>
+                してください。
+            </p>
+            <p class="mt-2 text-lg leading-8 text-gray-600">
+                オフィス登録済みで、アカウントをお持ちでない方は、
+                <a class="text-blue-600 underline decoration-blue-600" href="{{ route('join') }}">ジョイン</a>
                 してください。
             </p>
         </div>
