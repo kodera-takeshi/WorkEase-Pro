@@ -94,3 +94,5 @@ Route::get('/signup', [UserCertificationController::class, 'signup'])->name('sig
 Route::post('/create', [UserCertificationController::class, 'create'])->name('signup.create');
 Route::get('/signin', [UserCertificationController::class, 'signin'])->name('signin');
 Route::post('/signin', [UserCertificationController::class, 'check'])->name('signin.check');
+Route::get('/join', [UserCertificationController::class, 'join'])->name('join');
+Route::get('/fetch-company-data', [UserCertificationController::class, 'fetchCompany'])->name('fetch.company.data');

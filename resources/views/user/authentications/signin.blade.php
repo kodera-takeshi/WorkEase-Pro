@@ -16,10 +16,15 @@
         </div>
         <div class="mx-auto max-w-2xl text-center">
             <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Sign In</h2>
-            <p class="mt-2 text-lg leading-8 text-gray-600">ログインします。</p>
+            <p class="mt-2 text-lg leading-8 text-gray-600">オフィスにログインします。</p>
             <p class="mt-2 text-lg leading-8 text-gray-600">
                 アカウントをお持ちでない方は、
                 <a class="text-blue-600 underline decoration-blue-600" href="{{ route('signup') }}">サインアップ</a>
+                してください。
+            </p>
+            <p class="mt-2 text-lg leading-8 text-gray-600">
+                オフィス登録済みで、アカウントをお持ちでない方は、
+                <a class="text-blue-600 underline decoration-blue-600" href="{{ route('join') }}">ジョイン</a>
                 してください。
             </p>
         </div>
