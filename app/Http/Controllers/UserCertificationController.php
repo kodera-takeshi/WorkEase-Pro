@@ -83,27 +83,4 @@ class UserCertificationController extends Controller
         $message = null;
         return view('user.authentications.join', compact('message'));
     }
-
-    public function fetchCompany()
-    {
-        try {
-            // 企業のデータ取得
-            $company = CompanyRepository::fetch();
-
-            // APIリクエストを送信し、レスポンスを取得
-            $response = Http::get($company);
-            dd($response);
-            // レスポンスのステータスコードを確認
-            if ($response->failed()) {
-                throw new \Exception('サーバーエラー: ' . $response->status());
-            }
-
-            // JSONデータを取得
-            $data = $response->json();
-
-            return response()->json(['data' => $data]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
-    }
 }
