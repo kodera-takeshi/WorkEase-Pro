@@ -12,8 +12,16 @@ class EmployeeRepository
      * @param array $param
      * @return void
      */
-    static function create(array $param) {
+    static function create(array $param)
+    {
         DB::table('employees')->insert($param);
+    }
+
+    static function get($id)
+    {
+        return DB::table('employees')
+            ->where('id', $id)
+            ->first();
     }
 
     /**
