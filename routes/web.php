@@ -10,6 +10,7 @@ use App\Http\Controllers\AdminManagerialPositionController;
 use App\Http\Controllers\AdminRequestController;
 use App\Http\Controllers\AdminListController;
 use App\Http\Controllers\UserCertificationController;
+use App\Http\Controllers\MailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -96,3 +97,6 @@ Route::get('/signin', [UserCertificationController::class, 'signin'])->name('sig
 Route::post('/signin', [UserCertificationController::class, 'check'])->name('signin.check');
 Route::get('/join', [UserCertificationController::class, 'join'])->name('join');
 Route::post('/join', [UserCertificationController::class, 'joinCreate'])->name('join.create');
+
+Route::get('/mail', [MailController::class, 'index'])->name('mail');
+Route::post('/mail', [MailController::class, 'send'])->name('mail.send');
