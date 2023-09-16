@@ -221,31 +221,31 @@
     </div>
 </div>
 </body>
-{{--<footer>--}}
-{{--    id:--}}
-{{--    {{ \Illuminate\Support\Facades\Session::get('user.id') }}--}}
-{{--    <br>--}}
-{{--    name:--}}
-{{--    {{ \Illuminate\Support\Facades\Session::get('user.name') }}--}}
-{{--    <br>--}}
-{{--    email:--}}
-{{--    {{ \Illuminate\Support\Facades\Session::get('user.email') }}--}}
-{{--    <br>--}}
-{{--    birthday:--}}
-{{--    {{ \Illuminate\Support\Facades\Session::get('user.birthday') }}--}}
-{{--    <br>--}}
-{{--    company_id:--}}
-{{--    {{ \Illuminate\Support\Facades\Session::get('user.company_id') }}--}}
-{{--    <br>--}}
-{{--    office_id:--}}
-{{--    {{ \Illuminate\Support\Facades\Session::get('user.office_id') }}--}}
-{{--    <br>--}}
-{{--    managerial_position_id:--}}
-{{--    {{ \Illuminate\Support\Facades\Session::get('user.managerial_position_id') }}--}}
-{{--    <br>--}}
-{{--    employee_status_id:--}}
-{{--    {{ \Illuminate\Support\Facades\Session::get('user.employee_status_id') }}--}}
-{{--</footer>--}}
+<footer>
+    id:
+    {{ \Illuminate\Support\Facades\Session::get('user.id') }}
+    <br>
+    name:
+    {{ \Illuminate\Support\Facades\Session::get('user.name') }}
+    <br>
+    email:
+    {{ \Illuminate\Support\Facades\Session::get('user.email') }}
+    <br>
+    birthday:
+    {{ \Illuminate\Support\Facades\Session::get('user.birthday') }}
+    <br>
+    company_id:
+    {{ \Illuminate\Support\Facades\Session::get('user.company_id') }}
+    <br>
+    office_id:
+    {{ \Illuminate\Support\Facades\Session::get('user.office_id') }}
+    <br>
+    managerial_position_id:
+    {{ \Illuminate\Support\Facades\Session::get('user.managerial_position_id') }}
+    <br>
+    employee_status_id:
+    {{ \Illuminate\Support\Facades\Session::get('user.employee_status_id') }}
+</footer>
 <script>
     /* プロフィールメニュー表示の切り替え処理 */
     //ボタン要素を取得

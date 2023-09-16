@@ -32,7 +32,7 @@
                 class="block w-5/6 rounded-sm cursor-pointer focus:outline-none"
             >
                 <!-- todo:セッションから情報をセット -->
-                <option value="1" selected>小寺剛史</option>
+                <option value="{{ \Illuminate\Support\Facades\Session::get('user.id') }}" selected>{{ \Illuminate\Support\Facades\Session::get('user.name') }}</option>
             </select>
         </div>
         <!-- To -->
@@ -49,10 +49,9 @@
                     multiple
                     class="block w-full rounded-sm cursor-pointer focus:outline-none"
                 >
-                    <option value="1">山田サトシ</option>
-                    <option value="2">鈴木サトル</option>
-                    <option value="3">田中サトミ</option>
-                    <option value="4">斉藤サトコ</option>
+                    @foreach($employees as $employee)
+                    <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                    @endforeach
                 </select>
             </div>
             <div id="to-group" class="w-4/6" style="display: none;">
@@ -62,10 +61,9 @@
                     multiple
                     class="block w-full rounded-sm cursor-pointer focus:outline-none"
                 >
-                    <option value="1">山田サトシG</option>
-                    <option value="2">鈴木サトルG</option>
-                    <option value="3">田中サトミG</option>
-                    <option value="4">斉藤サトコG</option>
+                    @foreach($employee_groups as $employee_group)
+                        <option value="{{ $employee_group->id }}">{{ $employee_group->name }}</option>
+                    @endforeach
                 </select>
             </div>
         </div>
@@ -83,10 +81,9 @@
                     multiple
                     class="block w-full rounded-sm cursor-pointer focus:outline-none"
                 >
-                    <option value="1">山田タケシ</option>
-                    <option value="2">鈴木タケル</option>
-                    <option value="3">田中タケミ</option>
-                    <option value="4">斉藤タケコ</option>
+                    @foreach($employees as $employee)
+                        <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                    @endforeach
                 </select>
             </div>
             <div id="cc-group" class="w-4/6" style="display: none;">
@@ -96,10 +93,9 @@
                     multiple
                     class="block w-full rounded-sm cursor-pointer focus:outline-none"
                 >
-                    <option value="1">山田タケシG</option>
-                    <option value="2">鈴木タケルG</option>
-                    <option value="3">田中タケミG</option>
-                    <option value="4">斉藤タケコG</option>
+                    @foreach($employee_groups as $employee_group)
+                        <option value="{{ $employee_group->id }}">{{ $employee_group->name }}</option>
+                    @endforeach
                 </select>
             </div>
         </div>
@@ -117,10 +113,9 @@
                     multiple
                     class="block w-full rounded-sm cursor-pointer focus:outline-none"
                 >
-                    <option value="1">山田マサシ</option>
-                    <option value="2">鈴木マサル</option>
-                    <option value="3">田中マサミ</option>
-                    <option value="4">斉藤マサコ</option>
+                    @foreach($employees as $employee)
+                        <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                    @endforeach
                 </select>
             </div>
             <div id="bcc-group" class="w-4/6" style="display: none;">
@@ -130,10 +125,9 @@
                     multiple
                     class="block w-full rounded-sm cursor-pointer focus:outline-none"
                 >
-                    <option value="1">山田マサシG</option>
-                    <option value="2">鈴木マサルG</option>
-                    <option value="3">田中マサミG</option>
-                    <option value="4">斉藤マサコG</option>
+                    @foreach($employee_groups as $employee_group)
+                        <option value="{{ $employee_group->id }}">{{ $employee_group->name }}</option>
+                    @endforeach
                 </select>
             </div>
         </div>
@@ -183,6 +177,18 @@
                 class="block w-2/6 rounded-sm cursor-pointer focus:outline-none p-1"
                 style="border: 1px solid #d0d0d0; border-radius: 3px;"
             >
+        </div>
+        <!-- 理由 -->
+        <div id="reason-form" class="flex justify-center items-center mt-3">
+            <label for="reason" class="font-semibold leading-6 text-gray-900 w-1/6">理由</label>
+            <input
+                required
+                type="text"
+                name="reason"
+                style="border: 1px solid #d0d0d0; border-radius: 3px;"
+                class="block w-5/6 rounded-sm cursor-pointer focus:outline-none p-1"
+            >
+            </select>
         </div>
         <div class="mt-10">
             <button type="submit"
