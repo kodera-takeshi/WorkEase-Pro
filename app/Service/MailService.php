@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Mail\HolidayMail;
 use App\Mail\SalariedMail;
 use App\Repository\EmployeeGroupMemberRepository;
 use App\Repository\EmployeeRepository;
@@ -35,8 +36,18 @@ class MailService
             'time' => $param->timeFrom . ' 〜 ' . $param->timeTo,
             'reason' => $param->reason
         ];
-        if ($type == 3){
-            Mail::send(new SalariedMail($param));
+        switch ($type) {
+            case 1:
+                $mail = Mail::send(new HolidayMail($param));
+                break;
+            case 2:
+                $mail = null;
+                break;
+            case 3:
+                $mail = Mail::send(new SalariedMail($param));
+                break;
+            case 4:
+                break;
         }
         return true;
     }

@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class SalariedMail extends Mailable
+class HolidayMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -39,15 +39,15 @@ class SalariedMail extends Mailable
             'name' => $this->mail_name,
             'date' => $this->mail_date,
             'time' => $this->mail_time,
-            'reason' => $this->mail_reason,
+            'reason' => $this->mail_reason
         ];
 
         return $this->from($this->mail_from)
             ->to( $this->mail_to)
             ->cc( $this->mail_cc)
             ->bcc( $this->mail_bcc)
-            ->subject('【残業申請】' . $this->mail_date . 'の残業対応について')
-            ->view('user.mail.salaried')
+            ->subject('【有給休暇申請】' . $this->mail_date . 'の勤務について')
+            ->view('user.mail.holiday')
             ->with($contents);
     }
 }
