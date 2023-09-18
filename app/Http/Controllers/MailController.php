@@ -22,6 +22,6 @@ class MailController extends Controller
     public function send(Request $request)
     {
         MailService::send($request);
-        Redirect::route('mail');
+        return Redirect::route('mail');
     }
 }
