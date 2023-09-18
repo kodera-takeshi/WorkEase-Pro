@@ -12,8 +12,29 @@ class EmployeeRepository
      * @param array $param
      * @return void
      */
-    static function create(array $param) {
+    static function create(array $param)
+    {
         DB::table('employees')->insert($param);
+    }
+
+    /**
+     * @param $id
+     * @return Model|Builder|object|null
+     */
+    static function get($id)
+    {
+        return DB::table('employees')
+            ->where('id', $id)
+            ->first();
+    }
+
+    static function employee($company_id)
+    {
+        return DB::table('employees')
+            ->where('company_id', $company_id)
+            ->where('employee_status_id', 1)
+            ->get()
+            ->all();
     }
 
     /**

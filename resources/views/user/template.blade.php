@@ -34,7 +34,7 @@
                             <a href="#" class="hover:bg-gray-700 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">企業一覧</a>
                             <a href="#" class="text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">ステータス</a>
                             <a href="#" class="text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">社員ステータス</a>
-                            <a href="#" class="text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">役職</a>
+                            <a href="{{ route('mail') }}" class="text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">メール</a>
                         </div>
                     </div>
                 </div>
@@ -132,7 +132,7 @@
                 <a href="#" class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium" aria-current="page">企業一覧</a>
                 <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">ステータス</a>
                 <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">社員ステータス</a>
-                <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">役職</a>
+                <a href="{{ route('mail') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">メール</a>
 
             </div>
             <div class="border-t border-gray-700 pb-3 pt-4">
@@ -221,31 +221,31 @@
     </div>
 </div>
 </body>
-{{--<footer>--}}
-{{--    id:--}}
-{{--    {{ \Illuminate\Support\Facades\Session::get('user.id') }}--}}
-{{--    <br>--}}
-{{--    name:--}}
-{{--    {{ \Illuminate\Support\Facades\Session::get('user.name') }}--}}
-{{--    <br>--}}
-{{--    email:--}}
-{{--    {{ \Illuminate\Support\Facades\Session::get('user.email') }}--}}
-{{--    <br>--}}
-{{--    birthday:--}}
-{{--    {{ \Illuminate\Support\Facades\Session::get('user.birthday') }}--}}
-{{--    <br>--}}
-{{--    company_id:--}}
-{{--    {{ \Illuminate\Support\Facades\Session::get('user.company_id') }}--}}
-{{--    <br>--}}
-{{--    office_id:--}}
-{{--    {{ \Illuminate\Support\Facades\Session::get('user.office_id') }}--}}
-{{--    <br>--}}
-{{--    managerial_position_id:--}}
-{{--    {{ \Illuminate\Support\Facades\Session::get('user.managerial_position_id') }}--}}
-{{--    <br>--}}
-{{--    employee_status_id:--}}
-{{--    {{ \Illuminate\Support\Facades\Session::get('user.employee_status_id') }}--}}
-{{--</footer>--}}
+<footer>
+    id:
+    {{ \Illuminate\Support\Facades\Session::get('user.id') }}
+    <br>
+    name:
+    {{ \Illuminate\Support\Facades\Session::get('user.name') }}
+    <br>
+    email:
+    {{ \Illuminate\Support\Facades\Session::get('user.email') }}
+    <br>
+    birthday:
+    {{ \Illuminate\Support\Facades\Session::get('user.birthday') }}
+    <br>
+    company_id:
+    {{ \Illuminate\Support\Facades\Session::get('user.company_id') }}
+    <br>
+    office_id:
+    {{ \Illuminate\Support\Facades\Session::get('user.office_id') }}
+    <br>
+    managerial_position_id:
+    {{ \Illuminate\Support\Facades\Session::get('user.managerial_position_id') }}
+    <br>
+    employee_status_id:
+    {{ \Illuminate\Support\Facades\Session::get('user.employee_status_id') }}
+</footer>
 <script>
     /* プロフィールメニュー表示の切り替え処理 */
     //ボタン要素を取得
