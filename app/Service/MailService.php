@@ -33,7 +33,7 @@ class MailService
             'cc' => Self::selectMember($param->ccCheckbox, $param->cc, $param->ccGroup),
             'bcc' => Self::selectMember($param->bccCheckbox, $param->bcc, $param->bccGroup),
             'date' => Self::makeDate($param->dateCheckbox, $param->date, $param->dateFrom, $param->dateTo),
-            'time' => $param->timeFrom . ' 〜 ' . $param->timeTo,
+            'time' => $param->timeFrom . '〜' . $param->timeTo,
             'reason' => $param->reason
         ];
         switch ($type) {
