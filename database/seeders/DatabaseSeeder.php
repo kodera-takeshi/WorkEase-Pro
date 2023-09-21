@@ -18,5 +18,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ManagerialPositionsSeeder::class);
         $this->call(AdminSeeder::class);
         $this->call(CompanySeeder::class);
+        $this->call(OfficeSeeder::class);
     }
 }
