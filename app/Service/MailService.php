@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Mail\HolidayMail;
 use App\Mail\SalariedMail;
+use App\Mail\EarlyShiftMail;
 use App\Repository\EmployeeGroupMemberRepository;
 use App\Repository\EmployeeRepository;
 use Illuminate\Support\Facades\Mail;
@@ -41,7 +42,7 @@ class MailService
                 $mail = Mail::send(new HolidayMail($param));
                 break;
             case 2:
-                $mail = null;
+                $mail = Mail::send(new EarlyShiftMail($param));
                 break;
             case 3:
                 $mail = Mail::send(new SalariedMail($param));
