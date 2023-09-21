@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class EarlyShiftMail extends Mailable
+class HolidayWorkMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -46,8 +46,8 @@ class EarlyShiftMail extends Mailable
             ->to( $this->mail_to)
             ->cc( $this->mail_cc)
             ->bcc( $this->mail_bcc)
-            ->subject('【早出出勤申請】' . $this->mail_date . 'の勤務について')
-            ->view('user.mail.earlyshift')
+            ->subject('【休日出勤申請】' . $this->mail_date . 'の勤務について')
+            ->view('user.mail.holidaywork')
             ->with($contents);
     }
 }
